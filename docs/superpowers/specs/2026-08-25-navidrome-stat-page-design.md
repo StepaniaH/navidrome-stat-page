@@ -64,7 +64,7 @@ navidrome-stat-page/
 │   ├── layouts/Base.astro      # head/SEO/hreflang/Nav/Footer
 │   ├── components/             # 每 section 一组件，按区块分子目录
 │   │   ├── nav/  hero/  bento/  themes/  review/  how/  start/  trust/  faq/  footer/
-│   ├── lib/motion.ts           # IntersectionObserver 统一入口
+│              # IntersectionObserver 统一入口
 │   ├── styles/global.css       # 设计令牌（CSS 变量）+ Tailwind 4
 │   └── pages/
 │       ├── index.astro         # EN
