@@ -3,6 +3,12 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/hero/Hero.astro';
 import Proof from '../components/bento/Proof.astro';
 import Bento from '../components/bento/Bento.astro';
+import Themes from '../components/themes/Themes.astro';
+import YearReview from '../components/review/YearReview.astro';
+import HowItWorks from '../components/how/HowItWorks.astro';
+import QuickStart from '../components/start/QuickStart.astro';
+import Trust from '../components/trust/Trust.astro';
+import Faq from '../components/faq/Faq.astro';
 import { getT } from '../i18n/utils';
 
 const t = getT('en');
@@ -12,4 +18,10 @@ const t = getT('en');
   <Hero t={t} lang="en" />
   <Proof t={t} lang="en" />
   <Bento t={t} lang="en" />
+  <Themes t={t} lang="en" />
+  <YearReview t={t} lang="en" />
+  <HowItWorks t={t} lang="en" />
+  <QuickStart t={t} lang="en" />
+  <Trust t={t} lang="en" />
+  <Faq t={t} lang="en" />
 </Base>

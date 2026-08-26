@@ -1,0 +1,89 @@
+---
+import { CODE, LINKS } from '../../i18n/ui';
+import type { Language, Translation } from '../../i18n/utils';
+
+interface Props {
+  lang: Language;
+  t: Translation;
+}
+
+const { t } = Astro.props;
+
+const tabs = [
+  { key: 'compose', label: t.start.tabCompose, name: t.start.composeName, code: CODE.compose },
+  { key: 'run', label: t.start.tabRun, name: t.start.runName, code: CODE.run },
+  { key: 'env', label: t.start.tabEnv, name: t.start.envName, code: CODE.env },
+];
+---
+
+<section id="quickstart" class="scroll-mt-20">
+  <div class="mx-auto max-w-4xl px-4 pt-24 sm:px-6">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t.start.title}</h2>
+      <p class="mt-4 text-lg leading-relaxed text-mist">{t.start.subtitle}</p>
+    </div>
+
+    <div class="mt-10 overflow-hidden rounded-2xl border border-line bg-[#0a0f1c] shadow-2xl shadow-black/40" data-reveal>
+      <div class="flex items-center gap-3 border-b border-line/70 px-4 py-3">
+        <span class="flex gap-1.5" aria-hidden="true">
+          <span class="h-3 w-3 rounded-full bg-[#FF5F57]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#FEBC2E]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#28C840]"></span>
+        </span>
+        <div class="ml-2 flex gap-2" role="tablist" aria-label={t.start.title}>
+          {
+            tabs.map((tab, index) => (
+              <button
+                type="button"
+                role="tab"
+                aria-selected={index === 0}
+                data-start-tab={tab.key}
+                class="tab-btn"
+              >
+                {tab.label}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      {
+        tabs.map((tab, index) => (
+          <div data-start-panel={tab.key} class="relative" hidden={index !== 0}>
+            <div class="flex items-center justify-between border-b border-line/50 px-4 py-2">
+              <span class="font-mono text-xs text-mist">{tab.name}</span>
+              <button
+                type="button"
+                data-copy={`#code-${tab.key}`}
+                data-copied-label={t.start.copied}
+                class="flex items-center gap-1.5 rounded-lg border border-line bg-ink-2 px-2.5 py-1 text-xs text-mist transition-colors hover:text-frost disabled:opacity-60"
+              >
+                <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.25" />
+                  <path d="M10.5 5.5v-2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2" stroke="currentColor" stroke-width="1.25" />
+                </svg>
+                <span data-copy-label>{t.start.copy}</span>
+              </button>
+            </div>
+            <pre class="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-frost/90"><code id={`code-${tab.key}`}>{tab.code}</code></pre>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-5 flex flex-col items-center gap-3 text-center" data-reveal>
+      <p class="max-w-xl text-sm text-mist">{t.start.loginHint}</p>
+      <a
+        href={LINKS.config}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 text-sm text-brand-cyan transition-opacity hover:opacity-80"
+      >
+        {t.start.docsLink}
+        <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M5 3h8v8M13 3 3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
