@@ -62,19 +62,16 @@ The theme showcase renders a pure-CSS simulation of the dashboard (`src/componen
 
 ## Deployment (Cloudflare Pages)
 
-1. Push this repository to GitHub.
-2. In Cloudflare → Workers & Pages → Create → Pages → Connect to Git, select this repo.
-3. Build settings:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Output directory: `dist`
-4. Deploy. The custom domain and `_headers` file are picked up automatically.
-
-Alternatively deploy manually:
+The Cloudflare Pages project `navidrome-stat` is a **direct-upload** project (it cannot be switched to Git integration), so deploys are done with wrangler:
 
 ```sh
-npm run build && npx wrangler pages deploy dist
+npm run build
+npx wrangler pages deploy dist --project-name=navidrome-stat --branch=main
 ```
+
+Requires `npx wrangler login` once. Every deploy also gets a unique preview URL; `--branch=main` publishes to production at https://navidrome-stat.pages.dev.
+
+To automate, add a GitHub Action running the two commands above on push to `main`, with `CLOUDFLARE_API_TOKEN` (Pages: Edit permission) stored as a repository secret.
 
 ## Asset provenance
 
