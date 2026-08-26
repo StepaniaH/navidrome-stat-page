@@ -44,7 +44,7 @@
 
 - **色彩**：深空海军底 `#0B1220` 级；品牌渐变取自 icon：`#F97316`（橙）→ `#A3E635`（青柠）→ `#22D3EE`（青蓝）；描边深海军 `#16324F`；卡片半透明玻璃拟态 + 1px 渐变描边。
 - **字体**（全部经 @fontsource 自托管，构建期内联打包，无字体 CDN）：Space Grotesk（英文展示标题）、Inter（正文）、JetBrains Mono（代码）、Noto Sans SC（中文，unicode-range 分片按需加载）。
-- **动效**：纯 CSS keyframes + IntersectionObserver；滚动渐入、数字滚动、均衡器律动、进度条动画；统一由 `motion.ts` 管理；尊重 `prefers-reduced-motion`。
+- **动效**：纯 CSS keyframes + IntersectionObserver；滚动渐入、数字滚动、均衡器律动、进度条动画；统一由原生 `public/motion.js` 管理（CSP 禁内联脚本）；尊重 `prefers-reduced-motion`。
 - **气质**：与仪表盘的圆角卡片、柔和描边、粉彩点缀一致，但底色更暗、更聚焦。
 
 ## 技术架构
