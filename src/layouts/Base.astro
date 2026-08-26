@@ -1,13 +1,11 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource-variable/space-grotesk';
-import '@fontsource-variable/jetbrains-mono';
+import { Font } from 'astro:assets';
 import notoScCss from '../styles/noto-sc.css?url';
 import '../styles/global.css';
 
 import Nav from '../components/nav/Nav.astro';
 import Footer from '../components/footer/Footer.astro';
-import { LINKS, SITE_VERSION } from '../i18n/ui';
+import { LANGUAGES, LINKS, SITE_VERSION } from '../i18n/ui';
 import { getT, localePath, type Language } from '../i18n/utils';
 
 interface Props {
@@ -15,14 +13,43 @@ interface Props {
   title: string;
   description: string;
   path?: string;
+  noindex?: boolean;
 }
 
-const { lang, title, description, path = '/' } = Astro.props;
+const { lang, title, description, path = '/', noindex = false } = Astro.props;
 const t = getT(lang);
 const site = Astro.site ?? new URL('https://navidrome-stat.pages.dev');
 const canonical = new URL(localePath(lang, path), site);
-const enUrl = new URL(localePath('en', path), site).href;
-const zhUrl = new URL(localePath('zh', path), site).href;
+const altHrefs = Object.keys(LANGUAGES).map((code) => ({
+  code,
+  href: new URL(localePath(code as Language, path), site).href,
+}));
+
+const HTML_LANG: Record<Language, string> = {
+  en: 'en',
+  zh: 'zh-CN',
+  'zh-TW': 'zh-TW',
+  ja: 'ja',
+};
+
+const OG_LOCALE: Record<Language, string> = {
+  en: 'en_US',
+  zh: 'zh_CN',
+  'zh-TW': 'zh_TW',
+  ja: 'ja_JP',
+};
+
+const OG_IMAGE: Record<Language, string> = {
+  en: '/og.png',
+  zh: '/og-zh.png',
+  'zh-TW': '/og-zh-TW.png',
+  ja: '/og-ja.png',
+};
+
+const ogImage = new URL(OG_IMAGE[lang], site).href;
+const ogAlternates = Object.keys(LANGUAGES)
+  .filter((code) => code !== lang)
+  .map((code) => OG_LOCALE[code as Language]);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -38,34 +65,43 @@ const jsonLd = {
 };
 ---
 
-<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
+<html lang={HTML_LANG[lang]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical.href} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="zh" href={zhUrl} />
-    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    {
+      altHrefs.map((alt) => (
+        <link rel="alternate" hreflang={HTML_LANG[alt.code as Language]} href={alt.href} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={altHrefs[0].href} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b1220" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Navidrome Stat" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
-    <meta property="og:image" content={new URL('/og.png', site).href} />
-    <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
-    <meta property="og:locale:alternate" content={lang === 'zh' ? 'en_US' : 'zh_CN'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    {ogAlternates.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL('/og.png', site).href} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="preload" as="style" href={notoScCss} />
     <link rel="stylesheet" href={notoScCss} media="print" data-async-css />
     <noscript><link rel="stylesheet" href={notoScCss} /></noscript>
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-space-grotesk" preload />
+    <Font cssVariable="--font-jetbrains-mono" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline src="/motion.js" defer></script>
   </head>

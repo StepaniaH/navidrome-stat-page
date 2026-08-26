@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/hero/Hero.astro';
+import Proof from '../../components/bento/Proof.astro';
+import Bento from '../../components/bento/Bento.astro';
+import Themes from '../../components/themes/Themes.astro';
+import YearReview from '../../components/review/YearReview.astro';
+import ReviewModal from '../../components/review/ReviewModal.astro';
+import HowItWorks from '../../components/how/HowItWorks.astro';
+import QuickStart from '../../components/start/QuickStart.astro';
+import Trust from '../../components/trust/Trust.astro';
+import Faq from '../../components/faq/Faq.astro';
+import { getT } from '../../i18n/utils';
+
+const t = getT('ja');
+---
+
+<Base lang="ja" title={t.meta.title} description={t.meta.description}>
+  <Hero t={t} lang="ja" />
+  <Proof t={t} lang="ja" />
+  <Bento t={t} lang="ja" />
+  <Themes t={t} lang="ja" />
+  <YearReview t={t} lang="ja" />
+  <ReviewModal t={t} lang="ja" />
+  <HowItWorks t={t} lang="ja" />
+  <QuickStart t={t} lang="ja" />
+  <Trust t={t} lang="ja" />
+  <Faq t={t} lang="ja" />
+</Base>

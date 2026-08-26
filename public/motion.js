@@ -22,7 +22,12 @@
   }
 
   function renderCount(el, value) {
-    const locale = document.documentElement.lang === 'zh-CN' ? 'zh-CN' : 'en-US';
+    let locale = document.documentElement.lang || 'en';
+    try {
+      new Intl.NumberFormat(locale);
+    } catch {
+      locale = 'en';
+    }
     el.textContent = new Intl.NumberFormat(locale).format(value);
   }
 

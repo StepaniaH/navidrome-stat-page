@@ -6,7 +6,13 @@ export function getT(lang: Language): Translation {
   return ui[lang];
 }
 
+const PATH_PREFIX: Record<Language, string> = {
+  en: '',
+  zh: '/zh',
+  'zh-TW': '/zh-tw',
+  ja: '/ja',
+};
+
 export function localePath(lang: Language, path: string): string {
-  const prefix = lang === 'en' ? '' : '/zh';
-  return `${prefix}${path}`;
+  return `${PATH_PREFIX[lang]}${path}`;
 }

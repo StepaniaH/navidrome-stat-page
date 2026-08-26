@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://navidrome-stat.pages.dev/sitemap-index.xml

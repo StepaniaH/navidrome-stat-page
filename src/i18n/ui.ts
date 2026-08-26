@@ -1,11 +1,13 @@
-export type Language = 'en' | 'zh';
+export type Language = 'en' | 'zh' | 'zh-TW' | 'ja';
 
 export const LANGUAGES: Record<Language, string> = {
   en: 'English',
   zh: '简体中文',
+  'zh-TW': '繁體中文',
+  ja: '日本語',
 };
 
-export const FUTURE_LANGUAGES: string[] = ['Deutsch', '日本語', 'Français', 'Español'];
+export const FUTURE_LANGUAGES: string[] = ['Français', 'Español'];
 
 export const SITE_VERSION = 'v0.8.1';
 
@@ -224,6 +226,10 @@ const en = {
       {
         q: 'Does it work with Jellyfin or Airsonic?',
         a: 'It works with any server that speaks the Subsonic API, but it is developed and tested against Navidrome. OpenSubsonic extensions are used when a server offers them.',
+      },
+      {
+        q: 'How is this different from Last.fm or Maloja?',
+        a: 'Last.fm records scrobbles in someone else’s cloud; Maloja is self-hosted but still depends on clients submitting scrobbles. Navidrome Stat needs no client support at all — it watches the server’s own now-playing feed, so every Subsonic client is covered by default, and the data stays on your disk.',
       },
       {
         q: 'Where does my data live?',
@@ -461,6 +467,10 @@ const zh: Translation = {
         a: '任何讲 Subsonic API 的服务器都可以，但项目只针对 Navidrome 开发与测试。服务器支持的 OpenSubsonic 扩展会被自动采用。',
       },
       {
+        q: '和 Last.fm 或 Maloja 有什么不同？',
+        a: 'Last.fm 把 scrobble 存在别人的云端；Maloja 虽然自托管，但仍依赖客户端主动提交收听记录。Navidrome Stat 完全不需要客户端配合——它直接观测服务器自己的 now-playing 数据流，任何 Subsonic 客户端默认被覆盖，数据也只留在你的磁盘上。',
+      },
+      {
         q: '我的数据存在哪里？',
         a: '在你自己磁盘上容器 /data 卷中的一个 SQLite 文件里。你可以在设置页将其导出为 JSON、导入到别处，或删除某个用户的收听历史。',
       },
@@ -490,7 +500,481 @@ const zh: Translation = {
   },
 };
 
-export const ui: Record<Language, Translation> = { en, zh };
+const zhTW: Translation = {
+  meta: {
+    title: 'Navidrome Stat — 自託管的 Navidrome 收聽統計',
+    description:
+      '無論用什麼 Subsonic 用戶端、什麼裝置、幾台 Navidrome 伺服器，所有播放都匯聚到同一塊自託管儀表板：收聽時數、趨勢、排行榜與年度回顧。開源，MIT。',
+  },
+  nav: {
+    features: '特性',
+    themes: '主題',
+    review: '年度回顧',
+    start: '快速開始',
+    faq: '常見問題',
+    docs: '文件',
+    deploy: '部署',
+    menuOpen: '開啟選單',
+    menuClose: '關閉選單',
+    language: '語言',
+    soon: '即將支援',
+    skip: '跳至主要內容',
+  },
+  hero: {
+    badge: '自託管 · 開源 · MIT',
+    titleA: '每一次播放，',
+    titleB: '都算數。',
+    subtitle:
+      'Navidrome Stat 輪詢 Navidrome 伺服器的 getNowPlaying 介面，把所有 Subsonic 用戶端的播放匯聚成一塊自託管儀表板——收聽時數、趨勢、排行榜和年度回顧。資料從不離開你的機器。',
+    ctaDeploy: '用 Docker 部署',
+    ctaGithub: '在 GitHub 查看',
+    np: {
+      live: '正在收聽',
+      track: 'Blue in Green',
+      artist: 'Miles Davis — Kind of Blue',
+      client: 'Feishin · home-nas',
+      total: '5:37',
+    },
+  },
+  proof: {
+    ph: 'Product Hunt 首发',
+    mit: 'MIT 授權',
+    docker: 'Docker Hub — stepaniah/navidrome-statistic',
+    stack: '10 組主題 · 5 種語言 · 任意 Subsonic 用戶端',
+  },
+  bento: {
+    title: '你的收聽歷史，值得被完整呈現',
+    subtitle: 'Navidrome 的各個用戶端彼此不共享統計。Navidrome Stat 改為在伺服器端觀測——所有用戶端，同一條歷史。',
+    np: {
+      title: '即時正在播放',
+      desc: '跨用戶端、跨伺服器，即時看到正在進行的收聽。',
+    },
+    aggregate: {
+      title: '所有用戶端，同一條歷史',
+      desc: 'DSub、Symfonium、Feishin、網頁播放器——任何 Subsonic 用戶端的播放都匯入同一條歷史，多台 Navidrome 伺服器也不例外。',
+    },
+    charts: {
+      title: '足夠深的圖表',
+      desc: '按小時與按天的趨勢、星期×小時熱力圖、用戶端佔比、轉碼率，以及藝術家、專輯、曲目排行榜。',
+    },
+    review: {
+      title: '年度回顧',
+      desc: '年度總量、連續收聽天數，以及你的年度藝術家、專輯與曲目——屬於你自己的 Wrapped，基於你自己的資料。',
+    },
+    cover: {
+      title: '封面代理與快取',
+      desc: '專輯封面經過帶驗證的、容量受限的快取——你的音樂庫保持私密。',
+    },
+    privacy: {
+      title: '資料由你做主',
+      desc: '一切都在一個屬於你的 SQLite 檔案裡。按使用者匯出、匯入與刪除，可選 token 驗證，零遙測。',
+      points: ['JSON 匯出與匯入', '按使用者刪除', '可選 token 驗證'],
+    },
+    themesCard: {
+      title: '十組主題',
+      desc: 'Catppuccin、Nord、Dracula、Tokyo Night、Gruvbox、Solarized——即時切換。',
+    },
+    langs: {
+      title: '五種語言',
+      desc: '简体中文、繁體中文、English、日本語、Deutsch——更多語言已在路線圖上。',
+    },
+  },
+  themes: {
+    title: '主題隨你挑',
+    subtitle: '十組內建主題，整個儀表板即時換色。點一個試試：',
+    urlLabel: 'localhost:39421',
+    mockLabel: '所選主題下 Navidrome Stat 儀表板的互動式預覽',
+    mock: {
+      title: 'Playback Statistics',
+      range: 'Last 30 days',
+      servers: 'All servers',
+      live: 'Listening in real time',
+      nowPlaying: 'Now Playing',
+      clientTag: 'Feishin · home-nas',
+      plays: 'Total plays',
+      listeningTime: 'Listening time',
+      uniqueTracks: 'Unique tracks',
+      clients: 'Clients · by play count',
+      transcoding: 'Transcoding',
+      directPlay: 'Direct Play',
+      transcoded: 'Transcoded',
+    },
+  },
+  review: {
+    title: '你的年度音樂報告',
+    subtitle: '一頁看盡一整年：總量、連續天數，和陪你走過這一年的歌。',
+    plays: '次播放',
+    hours: '小時收聽',
+    artists: '位藝術家',
+    streak: '天連續收聽',
+    topTrack: '年度曲目',
+    disclaimer: '範例資料——真實數字來自你自己的音樂庫。',
+    cta: '看一份年度回顧範例',
+    modal: {
+      tag: '2025 · 範例音樂庫',
+      close: '關閉預覽',
+      deploy: '部署后生成你自己的',
+      how: '工作原理',
+    },
+  },
+  how: {
+    title: '工作原理',
+    subtitle: '無需用戶端外掛、無需註冊、不上雲。一個輕量容器，守在你的音樂伺服器旁邊。',
+    step1: {
+      title: '輪詢 getNowPlaying',
+      desc: '每 10 秒（可設定）透過 Subsonic API 向每台 Navidrome 伺服器詢問正在播放的內容——介面本來就在。',
+    },
+    step2: {
+      title: '追蹤真實工作階段',
+      desc: '暫停與中斷不計入。累計有效收聽超過門檻（預設 30 秒）才算一次播放。',
+    },
+    step3: {
+      title: '儲存並呈現',
+      desc: '有效播放寫入你磁碟上的 SQLite，在 39421 連接埠的自包含儀表板中呈現。',
+    },
+    note: '當伺服器支援 OpenSubsonic playbackReport 擴充時會自動採用，讓進度與時長統計更精確。',
+  },
+  start: {
+    title: '一個 compose 檔即可啟動',
+    subtitle: '複製、貼上，開啟 39421 連接埠。建議鎖定版本號，確保更新可重現。',
+    tabCompose: 'compose.yaml',
+    tabRun: 'docker run',
+    tabEnv: '.env',
+    copy: '複製',
+    copied: '已複製',
+    composeName: 'compose.yaml',
+    runName: '終端機',
+    envName: '.env',
+    docsLink: '完整設定參考',
+    loginHint: '設定 STATS_API_TOKEN 後，首次存取在登入頁輸入一次即可——瀏覽器只保存 HttpOnly 會話 Cookie，而非 token 本身。',
+  },
+  trust: {
+    privacyTitle: '預設私密',
+    privacyItems: [
+      {
+        title: '資料留在本機',
+        desc: '收聽歷史只存在於你自己資料卷裡的一個 SQLite 檔案。',
+      },
+      {
+        title: '隨時匯出或刪除',
+        desc: '設定頁內建按使用者的 JSON 匯出、匯入與刪除。',
+      },
+      {
+        title: '可選驗證',
+        desc: '設定 STATS_API_TOKEN 後儀表板與 API 均需登入——工作階段使用 HttpOnly Cookie。',
+      },
+      {
+        title: '零遙測',
+        desc: '容器唯一的外呼對象就是你的 Navidrome 伺服器。',
+      },
+    ],
+    limitsTitle: '誠實的局限',
+    limitItems: [
+      {
+        title: '一組資料源只跑一個執行個體',
+        desc: '多個實例輪詢同一批伺服器會導致播放被重複計數。',
+      },
+      {
+        title: 'SQLite 明文儲存',
+        desc: '資料庫與設定頁保存的憑證均為明文——請像對待機密一樣保護資料卷。',
+      },
+      {
+        title: '不內建 TLS',
+        desc: '遠端存取請置於你的 HTTPS 反向代理之後。',
+      },
+    ],
+  },
+  faq: {
+    title: '常見問題',
+    items: [
+      {
+        q: '支援哪些播放用戶端？',
+        a: '任何相容 Subsonic 的用戶端——DSub、Symfonium、Feishin、play:Sub、substreamer、Navidrome 網頁端等。統計資料來自伺服器端的 getNowPlaying 介面，用戶端無需安裝任何東西。',
+      },
+      {
+        q: '可以追蹤多台 Navidrome 伺服器嗎？',
+        a: '可以。在 設定 → 連線 中逐一新增；播放按來源標記，儀表板可按伺服器篩選。',
+      },
+      {
+        q: '一次播放是如何判定的？',
+        a: '累計有效收聽時長需超過 PLAY_THRESHOLD_SEC（預設 30 秒）。暫停與失聯時段不計入；檢查點更新同一條記錄；未達門檻就結束的工作階段會單獨保存為播放嘗試，不計為播放。',
+      },
+      {
+        q: '支援 Jellyfin 或 Airsonic 嗎？',
+        a: '任何講 Subsonic API 的伺服器都可以，但專案只針對 Navidrome 開發與測試。伺服器支援的 OpenSubsonic 擴充會被自動採用。',
+      },
+      {
+        q: '和 Last.fm 或 Maloja 有什麼不同？',
+        a: 'Last.fm 把 scrobble 存在別人的雲端；Maloja 雖然自託管，但仍依賴用戶端主動提交收聽記錄。Navidrome Stat 完全不需要用戶端配合——它直接觀測伺服器自己的 now-playing 資料流，任何 Subsonic 用戶端預設被涵蓋，資料也只留在你的磁碟上。',
+      },
+      {
+        q: '我的資料存在哪裡？',
+        a: '在你自己磁碟上容器 /data 卷中的一個 SQLite 檔案裡。你可以在設定頁將其匯出為 JSON、匯入到別處，或刪除某個使用者的收聽歷史。',
+      },
+      {
+        q: '它佔用資源多嗎？',
+        a: '一個輕量容器、一個 SQLite 檔案、10 秒一次的輪詢——樹莓派也能輕鬆跑。',
+      },
+    ],
+  },
+  footer: {
+    ctaTitle: '準備好和這一年的音樂見面了嗎？',
+    ctaButton: '部署 Navidrome Stat',
+    links: {
+      github: 'GitHub',
+      docker: 'Docker Hub',
+      ph: 'Product Hunt',
+      issues: 'Issues',
+      changelog: '更新日誌',
+      license: 'MIT 授權',
+    },
+    version: 'v0.8.1 · MIT',
+  },
+  notfound: {
+    title: '這個頁面漏了一拍。',
+    desc: '你要找的頁面不存在。',
+    home: '回到首頁',
+  },
+};
+
+const ja: Translation = {
+  meta: {
+    title: 'Navidrome Stat — Navidrome 向けセルフホストのリスニング統計',
+    description:
+      'Subsonic クライアント、デバイス、Navidrome サーバーがいくつあっても、すべての再生を 1 つのセルフホスト ダッシュボードに集約。リスニング時間、トレンド、ランキング、年間まとめ。オープンソース、MIT。',
+  },
+  nav: {
+    features: '機能',
+    themes: 'テーマ',
+    review: '年間まとめ',
+    start: 'クイックスタート',
+    faq: 'よくある質問',
+    docs: 'ドキュメント',
+    deploy: 'デプロイ',
+    menuOpen: 'メニューを開く',
+    menuClose: 'メニューを閉じる',
+    language: '言語',
+    soon: '近日対応',
+    skip: '本文へスキップ',
+  },
+  hero: {
+    badge: 'セルフホスト · オープンソース · MIT',
+    titleA: 'すべての再生を、',
+    titleB: '逃さず記録。',
+    subtitle:
+      'Navidrome Stat は Navidrome サーバーの getNowPlaying API をポーリングし、すべての Subsonic クライアントの再生を 1 つのセルフホスト ダッシュボードにまとめます。リスニング時間、トレンド、ランキング、年間まとめ。データがマシンの外に出ることはありません。',
+    ctaDeploy: 'Docker でデプロイ',
+    ctaGithub: 'GitHub で見る',
+    np: {
+      live: '再生中',
+      track: 'Blue in Green',
+      artist: 'Miles Davis — Kind of Blue',
+      client: 'Feishin · home-nas',
+      total: '5:37',
+    },
+  },
+  proof: {
+    ph: 'Product Hunt 掲載',
+    mit: 'MIT ライセンス',
+    docker: 'Docker Hub — stepaniah/navidrome-statistic',
+    stack: '10 テーマ · 5 言語 · 任意の Subsonic クライアント',
+  },
+  bento: {
+    title: 'リスニング履歴のすべてを、見える形に',
+    subtitle: 'Navidrome のクライアント間で統計は共有されません。Navidrome Stat はサーバー側で観測します——すべてのクライアント、1 つの履歴。',
+    np: {
+      title: 'リアルタイム再生状況',
+      desc: 'クライアントもサーバーも問わず、進行中のリスニングをリアルタイムで確認。',
+    },
+    aggregate: {
+      title: 'どのクライアントでも、1 つの履歴',
+      desc: 'DSub、Symfonium、Feishin、Web プレーヤー——Subsonic 対応クライアントからの再生はすべて同じ履歴に記録されます。複数の Navidrome サーバーも同様。',
+    },
+    charts: {
+      title: '深くまで掘り下げるチャート',
+      desc: '時間別・日別トレンド、曜日×時間帯ヒートマップ、クライアント別内訳、トランスコード率、アーティスト・アルバム・曲のランキング。',
+    },
+    review: {
+      title: '年間まとめ',
+      desc: '年間合計、連続リスニング日数、あなたのベストアーティスト・アルバム・曲——自分のデータによる、自分だけの Wrapped。',
+    },
+    cover: {
+      title: 'カバーアートのプロキシとキャッシュ',
+      desc: 'アルバムアートは認証付き・容量制限付きのキャッシュを経由します——ライブラリは非公開のまま。',
+    },
+    privacy: {
+      title: 'データはあなたのもの',
+      desc: 'すべてはあなたが所有する 1 つの SQLite ファイルに。ユーザーごとのエクスポート、インポート、削除。任意のトークン認証。テレメトリーなし。',
+      points: ['JSON エクスポート/インポート', 'ユーザー単位の削除', '任意のトークン認証'],
+    },
+    themesCard: {
+      title: '10 のテーマ',
+      desc: 'Catppuccin、Nord、Dracula、Tokyo Night、Gruvbox、Solarized——ワンクリックで切替。',
+    },
+    langs: {
+      title: '5 つの言語',
+      desc: '简体中文、繁體中文、English、日本語、Deutsch——さらに追加予定。',
+    },
+  },
+  themes: {
+    title: 'テーマは好きなものを',
+    subtitle: '10 の内蔵テーマでダッシュボード全体が即座に切り替わります。クリックして試してみてください：',
+    urlLabel: 'localhost:39421',
+    mockLabel: '選択したテーマでの Navidrome Stat ダッシュボードのインタラクティブなプレビュー',
+    mock: {
+      title: 'Playback Statistics',
+      range: 'Last 30 days',
+      servers: 'All servers',
+      live: 'Listening in real time',
+      nowPlaying: 'Now Playing',
+      clientTag: 'Feishin · home-nas',
+      plays: 'Total plays',
+      listeningTime: 'Listening time',
+      uniqueTracks: 'Unique tracks',
+      clients: 'Clients · by play count',
+      transcoding: 'Transcoding',
+      directPlay: 'Direct Play',
+      transcoded: 'Transcoded',
+    },
+  },
+  review: {
+    title: 'あなたの1年の音楽',
+    subtitle: '1 ページに 1 年分：合計、連続日数、そして一年を伴った曲たち。',
+    plays: '回の再生',
+    hours: '時間リスニング',
+    artists: '人のアーティスト',
+    streak: '日連続リスニング',
+    topTrack: '年間トップ曲',
+    disclaimer: 'サンプルデータ——実際の数字はあなた自身のライブラリから。',
+    cta: '年間まとめのサンプルを見る',
+    modal: {
+      tag: '2025 · サンプルライブラリ',
+      close: 'プレビューを閉じる',
+      deploy: 'デプロイして自分のまとめを作る',
+      how: '仕組み',
+    },
+  },
+  how: {
+    title: '仕組み',
+    subtitle: 'クライアント插件もアカウント登録もクラウドも不要。小さなコンテナが 1 つ、音楽サーバーのそばで動くだけ。',
+    step1: {
+      title: 'getNowPlaying をポーリング',
+      desc: '10 秒ごと（設定可能）に Subsonic API 経由で各 Navidrome サーバーの再生状況を確認——インターフェースはすでにあります。',
+    },
+    step2: {
+      title: '実際のセッションを追跡',
+      desc: '一時停止や途切れはカウントされません。有効なリスニング時間がしきい値（既定 30 秒）を超えて初めて 1 回の再生として記録されます。',
+    },
+    step3: {
+      title: '保存して表示',
+      desc: '条件を満たした再生はディスク上の SQLite に書き込まれ、ポート 39421 の自己完結ダッシュボードで表示されます。',
+    },
+    note: 'サーバーが OpenSubsonic の playbackReport 拡張に対応している場合は自動的に使用され、位置と長さの追跡がより正確になります。',
+  },
+  start: {
+    title: 'compose ファイル 1 つで起動',
+    subtitle: 'コピーして貼り付け、ポート 39421 を開くだけ。更新の再現性のためバージョンタグの固定を推奨。',
+    tabCompose: 'compose.yaml',
+    tabRun: 'docker run',
+    tabEnv: '.env',
+    copy: 'コピー',
+    copied: 'コピーしました',
+    composeName: 'compose.yaml',
+    runName: 'ターミナル',
+    envName: '.env',
+    docsLink: '設定の完全なリファレンス',
+    loginHint: 'STATS_API_TOKEN を設定した場合、初回アクセス時にログイン画面で 1 度入力するだけ——ブラウザが保持するのは token ではなく HttpOnly セッション Cookie です。',
+  },
+  trust: {
+    privacyTitle: 'デフォルトでプライベート',
+    privacyItems: [
+      {
+        title: 'データはローカルに',
+        desc: 'リスニング履歴は自分のボリューム内の 1 つの SQLite ファイルにのみ存在します。',
+      },
+      {
+        title: 'いつでもエクスポート/削除',
+        desc: '設定ページにユーザー単位の JSON エクスポート、インポート、削除を内蔵。',
+      },
+      {
+        title: '任意の認証',
+        desc: 'STATS_API_TOKEN を設定するとダッシュボードと API にログインが必要になります——セッションは HttpOnly Cookie を使用。',
+      },
+      {
+        title: 'テレメトリーなし',
+        desc: 'コンテナが外部と通信する相手は、あなたの Navidrome サーバーだけです。',
+      },
+    ],
+    limitsTitle: '正直な制限',
+    limitItems: [
+      {
+        title: 'データソース一組につき 1 インスタンス',
+        desc: '同じサーバー群を複数インスタンスでポーリングすると、再生が重複カウントされます。',
+      },
+      {
+        title: 'SQLite は平文',
+        desc: 'データベースと設定ページに保存された認証情報は暗号化されていません——機密情報と同様にボリュームを保護してください。',
+      },
+      {
+        title: 'TLS は内蔵なし',
+        desc: 'リモートからアクセスする場合は、HTTPS リバースプロキシの背後に置いてください。',
+      },
+    ],
+  },
+  faq: {
+    title: 'よくある質問',
+    items: [
+      {
+        q: 'どの音楽クライアントに対応していますか？',
+        a: 'Subsonic 互換のクライアントなら何でも——DSub、Symfonium、Feishin、play:Sub、substreamer、Navidrome の Web UI など。統計はサーバーの getNowPlaying エンドポイントから取得するため、クライアント側には何もインストール不要です。',
+      },
+      {
+        q: '複数の Navidrome サーバーを追跡できますか？',
+        a: 'はい。設定 → 接続 で各サーバーを追加します。再生はソースごとに記録され、ダッシュボードでサーバー別に絞り込めます。',
+      },
+      {
+        q: '再生はどのように判定されますか？',
+        a: '有効なリスニング時間の累計が PLAY_THRESHOLD_SEC（既定 30 秒）を超える必要があります。一時停止と欠落区間は除外され、チェックポイントは同じレコードを更新します。しきい値に達しないまま終わったセッションは再生ではなく試行として保存されます。',
+      },
+      {
+        q: 'Jellyfin や Airsonic でも使えますか？',
+        a: 'Subsonic API を話すサーバーなら動作しますが、開発とテストは Navidrome 基準で行っています。サーバーが対応していれば OpenSubsonic 拡張も自動的に使用します。',
+      },
+      {
+        q: 'Last.fm や Maloja とは何が違いますか？',
+        a: 'Last.fm は scrobble を他人のクラウドに記録します。Maloja はセルフホストですが、クライアントが scrobble を送信する前提です。Navidrome Stat はクライアントの協力を一切必要とせず、サーバー自身の now-playing フィードを観測するため、すべての Subsonic クライアントが既定で対象になり、データも自分のディスクに留まります。',
+      },
+      {
+        q: 'データはどこに保存されますか？',
+        a: '自分のディスク上、コンテナの /data ボリューム内の 1 つの SQLite ファイルです。設定ページから JSON としてエクスポート、別の場所へのインポート、ユーザーごとの履歴削除ができます。',
+      },
+      {
+        q: 'リソース消費はどのくらい？',
+        a: '小さなコンテナ 1 つ、SQLite ファイル 1 つ、10 秒間隔のポーリング。Raspberry Pi でも快適に動きます。',
+      },
+    ],
+  },
+  footer: {
+    ctaTitle: '1 年の音楽との対面の準備はできましたか？',
+    ctaButton: 'Navidrome Stat をデプロイ',
+    links: {
+      github: 'GitHub',
+      docker: 'Docker Hub',
+      ph: 'Product Hunt',
+      issues: 'Issues',
+      changelog: '更新履歴',
+      license: 'MIT ライセンス',
+    },
+    version: 'v0.8.1 · MIT',
+  },
+  notfound: {
+    title: 'このページは拍子を外しました。',
+    desc: 'お探しのページは存在しません。',
+    home: 'トップへ戻る',
+  },
+};
+
+export const ui: Record<Language, Translation> = { en, zh, 'zh-TW': zhTW, ja };
 
 export const CODE = {
   compose: `services:
