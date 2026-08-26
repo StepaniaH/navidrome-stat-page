@@ -6,7 +6,7 @@ Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat)
 
 ## Principles
 
-- **Zero third-party requests.** Fonts, badges, screenshots, and icons are all self-hosted. No analytics, no cookies, no external resource loads.
+- **Zero third-party requests.** Fonts and icons are all self-hosted. No analytics, no cookies, no external resource loads.
 - **Strict CSP.** `script-src 'self'` — no inline scripts; interactions live in a single dependency-free `public/motion.js`. `style-src 'self' 'unsafe-inline'` allows style attributes, matching the main application's policy.
 - **No hardcoded copy in components.** All text comes from typed bilingual dictionaries in `src/i18n/ui.ts`. The `zh` dictionary is typed as `typeof en`, so missing translations fail `astro check`.
 - **Respects `prefers-reduced-motion`.** All animation degrades via CSS media queries and runtime checks.
@@ -36,7 +36,7 @@ src/
 │   ├── nav/           # sticky nav, language dropdown, mobile menu
 │   ├── hero/          # animated hero + "listening now" card
 │   ├── bento/         # proof strip + feature bento grid
-│   ├── themes/        # interactive theme showcase (real screenshots)
+│   ├── themes/        # interactive theme showcase (pure-CSS dashboard mock)
 │   ├── review/        # year-in-review strip (count-up numbers)
 │   ├── how/ start/    # how-it-works + quickstart tabs w/ copy buttons
 │   ├── trust/ faq/    # privacy/limitations cards + FAQ accordion
