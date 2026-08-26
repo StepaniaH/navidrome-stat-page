@@ -8,7 +8,7 @@ Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat)
 
 - **Zero third-party requests.** Fonts and icons are all self-hosted. No analytics, no cookies, no external resource loads.
 - **Strict CSP.** `script-src 'self'` — no inline scripts; interactions live in a single dependency-free `public/motion.js`. `style-src 'self' 'unsafe-inline'` allows style attributes, matching the main application's policy.
-- **No hardcoded copy in components.** All text comes from typed bilingual dictionaries in `src/i18n/ui.ts`. The `zh` dictionary is typed as `typeof en`, so missing translations fail `astro check`.
+- **No hardcoded copy in components.** All text comes from typed per-locale dictionaries in `src/i18n/ui.ts`. Every dictionary is typed as `typeof en` (en is the source of truth), so missing translations fail `astro check`.
 - **Respects `prefers-reduced-motion`.** All animation degrades via CSS media queries and runtime checks.
 - **Verifiable claims only.** Copy mirrors the main repository's README — no marketing fluff.
 
@@ -30,7 +30,7 @@ Requires Node 18.17+ (`.node-version` pins 22 for Cloudflare builds). Playwright
 ```
 src/
 ├── i18n/
-│   ├── ui.ts          # bilingual dictionaries (en source of truth, zh = typeof en)
+│   ├── ui.ts          # per-locale dictionaries (en source of truth; all typed typeof en)
 │   └── utils.ts       # getT(), localePath(); SITE_VERSION, LINKS constants
 ├── layouts/Base.astro # head/SEO/JSON-LD/fonts/security-relevant wiring
 ├── components/
@@ -62,7 +62,7 @@ Components and motion.js communicate exclusively through data attributes: `data-
 
 The Noto Sans SC stylesheet (`src/styles/noto-sc.css`) is loaded asynchronously (`media="print"`, flipped by motion.js) to keep render-blocking CSS small; CJK text renders in system fonts until it arrives, then swaps.
 
-The theme showcase renders a pure-CSS simulation of the dashboard (`src/components/themes/Themes.astro` + palettes in `src/data/themes.ts`) instead of screenshots — every one of the ten themes can be previewed live, themed entirely through `--dm-*` custom properties.
+The theme showcase renders a pure-CSS simulation of the dashboard (`src/components/themes/Themes.astro` + palettes in `src/data/themes.ts`) instead of screenshots — every one of the ten themes can be previewed live, themed entirely through `--dm-*` custom properties. Mock labels are localized with the dashboard's own UI strings for the locales the app supports (en, 简体中文, 繁體中文, 日本語); fr/es previews show the app's English UI, matching what a fr/es user would actually see.
 
 Latin fonts (Inter, Space Grotesk, JetBrains Mono) are managed by the Astro Fonts API (`experimental.fonts`, local provider over the Fontsource packages): self-hosted with hashed filenames, preloaded above the fold, with explicit `Noto Sans SC` fallbacks so CJK text still resolves to the async stylesheet.
 

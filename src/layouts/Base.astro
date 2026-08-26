@@ -60,7 +60,8 @@ const ogAlternates = Object.keys(LANGUAGES)
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Navidrome Statistic',
+  name: 'Navidrome Stat',
+  alternateName: 'Navidrome Statistic',
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'Docker, Linux',
   softwareVersion: SITE_VERSION.replace('v', ''),
@@ -96,12 +97,16 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogImageAlt} />
     <meta property="og:locale" content={OG_LOCALE[lang]} />
     {ogAlternates.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={t.meta.ogImageAlt} />
     <link rel="preload" as="style" href={notoScCss} />
     <link rel="stylesheet" href={notoScCss} media="print" data-async-css />
     <noscript><link rel="stylesheet" href={notoScCss} /></noscript>

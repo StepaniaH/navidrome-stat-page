@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { setTimeout as sleep } from 'node:timers/promises';
 
 const PORT = 4398;
@@ -8,6 +9,13 @@ const results = [];
 const check = (name, ok, detail = '') => {
   results.push(`${ok ? 'PASS' : 'FAIL'} ${name}${detail ? ' — ' + detail : ''}`);
 };
+
+// CSP must allow the data: font subsets Astro inlines into noto-sc.css
+{
+  const headersTxt = readFileSync(new URL('../public/_headers', import.meta.url), 'utf8');
+  const fontSrc = headersTxt.match(/font-src ([^;\n]+)/)?.[1] ?? '';
+  check('CSP font-src allows data: fonts', fontSrc.includes('data:'), fontSrc);
+}
 
 const server = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], {
   cwd: new URL('..', import.meta.url).pathname,
@@ -73,10 +81,31 @@ try {
   const npB = await read();
   check('np bar and time advance together', npB.w > npA.w && npB.t !== npA.t, `${JSON.stringify(npA)} -> ${JSON.stringify(npB)}`);
 
-  // lang menu escape
+  // lang menu escape + focus + semantics
   await page.click('[data-lang-btn]');
+  await page.locator('[data-lang-menu] a').first().focus();
   await page.keyboard.press('Escape');
   check('lang menu closes on Escape', await page.locator('[data-lang-menu]').isHidden());
+  check(
+    'lang menu Escape restores focus to button',
+    await page.evaluate(() => document.activeElement?.hasAttribute('data-lang-btn'))
+  );
+  {
+    const sem = await page.evaluate(() => {
+      const menu = document.querySelector('[data-lang-menu]');
+      return {
+        optionRoles: menu.querySelectorAll('[role="option"]').length,
+        current: menu.querySelector('a[aria-current="true"]')?.textContent?.trim(),
+      };
+    });
+    check('lang menu is semantic link list with aria-current', sem.optionRoles === 0 && sem.current === 'English', JSON.stringify(sem));
+  }
+
+  // version interpolation: compose snippet must carry the pinned version tag
+  {
+    const composeCode = await page.locator('[data-start-panel="compose"] code').textContent();
+    check('compose snippet pins SITE_VERSION', composeCode.includes('stepaniah/navidrome-statistic:v0.8.1'));
+  }
 
   // overflow desktop
   const overflowD = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -104,6 +133,32 @@ try {
     await p.close();
   }
 
+  // i18n correctness probes
+  {
+    const p = await browser.newPage();
+    await p.goto(BASE + '/zh-tw/', { waitUntil: 'networkidle' });
+    const body = await p.evaluate(() => document.body.innerText);
+    const raw = await p.evaluate(() => document.body.textContent);
+    check('zh-TW uses traditional 首發', body.includes('Product Hunt 首發'));
+    check('zh-TW uses traditional 部署後', raw.includes('部署後'));
+    await p.close();
+  }
+  {
+    const p = await browser.newPage();
+    await p.goto(BASE + '/ja/', { waitUntil: 'networkidle' });
+    const body = await p.evaluate(() => document.body.innerText);
+    check('ja uses プラグイン (not 插件)', body.includes('プラグイン') && !body.includes('插件'));
+    check('ja theme mock localized', body.includes('再生統計'));
+    await p.close();
+  }
+  {
+    const p = await browser.newPage();
+    await p.goto(BASE + '/zh/', { waitUntil: 'networkidle' });
+    const body = await p.evaluate(() => document.body.innerText);
+    check('zh theme mock localized', body.includes('播放统计'));
+    await p.close();
+  }
+
   // FAQPage JSON-LD present
   {
     const p = await browser.newPage();
@@ -114,6 +169,19 @@ try {
     check('FAQPage JSON-LD', hasFaqLd);
     const ogImage = await p.evaluate(() => document.querySelector('meta[property="og:image"]').content);
     check('localized og:image', ogImage.endsWith('/og-ja.png'), ogImage);
+    const ldName = await p.evaluate(() => {
+      const s = [...document.querySelectorAll('script[type="application/ld+json"]')].find((x) =>
+        x.textContent.includes('SoftwareApplication')
+      );
+      return s ? JSON.parse(s.textContent).name : null;
+    });
+    check('JSON-LD name is Navidrome Stat', ldName === 'Navidrome Stat', ldName);
+    const ogMeta = await p.evaluate(() => ({
+      w: document.querySelector('meta[property="og:image:width"]')?.content,
+      h: document.querySelector('meta[property="og:image:height"]')?.content,
+      alt: document.querySelector('meta[property="og:image:alt"]')?.content,
+    }));
+    check('og:image width/height/alt present', ogMeta.w === '1200' && ogMeta.h === '630' && !!ogMeta.alt, JSON.stringify(ogMeta));
     await p.close();
   }
 
@@ -125,7 +193,26 @@ try {
     check(`no horizontal overflow @375 ${path}`, overflow <= 0, `delta=${overflow}`);
     await pm.click('[data-menu-btn]');
     check(`mobile menu opens ${path}`, await pm.locator('[data-menu-panel]').isVisible());
+    const langHrefs = await pm.locator('[data-menu-panel] a').evaluateAll((as) =>
+      as
+        .map((a) => a.getAttribute('href'))
+        .filter((h) => ['/', '/zh/', '/zh-tw/', '/ja/', '/fr/', '/es/'].includes(h))
+    );
+    check(`mobile menu offers all 6 languages ${path}`, langHrefs.length === 6, langHrefs.join(' '));
+    await pm.click('[data-menu-panel] a[href="#features"]');
+    check(`mobile menu closes on anchor click ${path}`, await pm.locator('[data-menu-panel]').isHidden());
     await pm.close();
+    const pe = await browser.newPage({ viewport: { width: 375, height: 667 } });
+    await pe.goto(BASE + path, { waitUntil: 'networkidle' });
+    await pe.click('[data-menu-btn]');
+    check(`mobile menu opens for Escape test ${path}`, await pe.locator('[data-menu-panel]').isVisible());
+    await pe.keyboard.press('Escape');
+    const esc = await pe.evaluate(() => ({
+      hidden: document.querySelector('[data-menu-panel]').hidden,
+      focus: document.activeElement?.hasAttribute('data-menu-btn'),
+    }));
+    check(`mobile menu Escape closes + restores focus ${path}`, esc.hidden && esc.focus, JSON.stringify(esc));
+    await pe.close();
   }
 
   // reduced motion

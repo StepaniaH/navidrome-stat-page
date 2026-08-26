@@ -27,6 +27,7 @@ export const LINKS = {
 const en = {
   meta: {
     title: 'Navidrome Stat — self-hosted listening stats for Navidrome',
+    ogImageAlt: 'Navidrome Stat — self-hosted listening stats dashboard preview',
     description:
       'One dashboard for every play across your Subsonic clients, devices, and Navidrome servers. Listening time, trends, rankings, and a year in review. Self-hosted, open source, MIT.',
   },
@@ -256,7 +257,7 @@ const en = {
       changelog: 'Changelog',
       license: 'MIT License',
     },
-    version: 'v0.8.1 · MIT',
+    version: `${SITE_VERSION} · MIT`,
   },
   notfound: {
     title: 'This page skipped a beat.',
@@ -270,6 +271,7 @@ export type Translation = typeof en;
 const zh: Translation = {
   meta: {
     title: 'Navidrome Stat — 自托管的 Navidrome 收听统计',
+    ogImageAlt: 'Navidrome Stat——自托管收听统计仪表盘预览',
     description:
       '无论用什么 Subsonic 客户端、什么设备、几台 Navidrome 服务器，所有播放都汇聚到同一块自托管仪表盘：收听时长、趋势、榜单与年度回顾。开源，MIT。',
   },
@@ -354,19 +356,19 @@ const zh: Translation = {
     urlLabel: 'localhost:39421',
     mockLabel: '所选主题下 Navidrome Stat 仪表盘的交互式预览',
     mock: {
-      title: 'Playback Statistics',
-      range: 'Last 30 days',
-      servers: 'All servers',
-      live: 'Listening in real time',
-      nowPlaying: 'Now Playing',
+      title: '播放统计',
+      range: '最近 30 天',
+      servers: '全部服务器',
+      live: '实时监听中',
+      nowPlaying: '正在播放',
       clientTag: 'Feishin · home-nas',
-      plays: 'Total plays',
-      listeningTime: 'Listening time',
-      uniqueTracks: 'Unique tracks',
-      clients: 'Clients · by play count',
-      transcoding: 'Transcoding',
-      directPlay: 'Direct Play',
-      transcoded: 'Transcoded',
+      plays: '总播放次数',
+      listeningTime: '累计收听',
+      uniqueTracks: '曲目数',
+      clients: '客户端分布',
+      transcoding: '转码比例',
+      directPlay: '直出',
+      transcoded: '转码',
     },
   },
   review: {
@@ -497,7 +499,7 @@ const zh: Translation = {
       changelog: '更新日志',
       license: 'MIT 许可证',
     },
-    version: 'v0.8.1 · MIT',
+    version: `${SITE_VERSION} · MIT`,
   },
   notfound: {
     title: '这个页面跳拍了。',
@@ -509,6 +511,7 @@ const zh: Translation = {
 const zhTW: Translation = {
   meta: {
     title: 'Navidrome Stat — 自託管的 Navidrome 收聽統計',
+    ogImageAlt: 'Navidrome Stat——自託管收聽統計儀表板預覽',
     description:
       '無論用什麼 Subsonic 用戶端、什麼裝置、幾台 Navidrome 伺服器，所有播放都匯聚到同一塊自託管儀表板：收聽時數、趨勢、排行榜與年度回顧。開源，MIT。',
   },
@@ -543,7 +546,7 @@ const zhTW: Translation = {
     },
   },
   proof: {
-    ph: 'Product Hunt 首发',
+    ph: 'Product Hunt 首發',
     mit: 'MIT 授權',
     docker: 'Docker Hub — stepaniah/navidrome-statistic',
     stack: '10 組主題 · 5 種語言 · 任意 Subsonic 用戶端',
@@ -593,19 +596,19 @@ const zhTW: Translation = {
     urlLabel: 'localhost:39421',
     mockLabel: '所選主題下 Navidrome Stat 儀表板的互動式預覽',
     mock: {
-      title: 'Playback Statistics',
-      range: 'Last 30 days',
-      servers: 'All servers',
-      live: 'Listening in real time',
-      nowPlaying: 'Now Playing',
+      title: '播放統計',
+      range: '最近 30 天',
+      servers: '全部伺服器',
+      live: '即時監聽中',
+      nowPlaying: '正在播放',
       clientTag: 'Feishin · home-nas',
-      plays: 'Total plays',
-      listeningTime: 'Listening time',
-      uniqueTracks: 'Unique tracks',
-      clients: 'Clients · by play count',
-      transcoding: 'Transcoding',
-      directPlay: 'Direct Play',
-      transcoded: 'Transcoded',
+      plays: '總播放次數',
+      listeningTime: '累計收聽',
+      uniqueTracks: '曲目數',
+      clients: '用戶端分佈',
+      transcoding: '轉碼比例',
+      directPlay: '直出',
+      transcoded: '轉碼',
     },
   },
   review: {
@@ -621,7 +624,7 @@ const zhTW: Translation = {
     modal: {
       tag: '2025 · 範例音樂庫',
       close: '關閉預覽',
-      deploy: '部署后生成你自己的',
+      deploy: '部署後生成你自己的',
       how: '工作原理',
     },
   },
@@ -736,7 +739,7 @@ const zhTW: Translation = {
       changelog: '更新日誌',
       license: 'MIT 授權',
     },
-    version: 'v0.8.1 · MIT',
+    version: `${SITE_VERSION} · MIT`,
   },
   notfound: {
     title: '這個頁面漏了一拍。',
@@ -748,6 +751,7 @@ const zhTW: Translation = {
 const ja: Translation = {
   meta: {
     title: 'Navidrome Stat — Navidrome 向けセルフホストのリスニング統計',
+    ogImageAlt: 'Navidrome Stat——セルフホストのリスニング統計ダッシュボードのプレビュー',
     description:
       'Subsonic クライアント、デバイス、Navidrome サーバーがいくつあっても、すべての再生を 1 つのセルフホスト ダッシュボードに集約。リスニング時間、トレンド、ランキング、年間まとめ。オープンソース、MIT。',
   },
@@ -832,19 +836,19 @@ const ja: Translation = {
     urlLabel: 'localhost:39421',
     mockLabel: '選択したテーマでの Navidrome Stat ダッシュボードのインタラクティブなプレビュー',
     mock: {
-      title: 'Playback Statistics',
-      range: 'Last 30 days',
-      servers: 'All servers',
-      live: 'Listening in real time',
-      nowPlaying: 'Now Playing',
+      title: '再生統計',
+      range: '過去 30 日',
+      servers: 'すべてのサーバー',
+      live: 'リアルタイム再生を表示中',
+      nowPlaying: '再生中',
       clientTag: 'Feishin · home-nas',
-      plays: 'Total plays',
-      listeningTime: 'Listening time',
-      uniqueTracks: 'Unique tracks',
-      clients: 'Clients · by play count',
-      transcoding: 'Transcoding',
-      directPlay: 'Direct Play',
-      transcoded: 'Transcoded',
+      plays: '総再生数',
+      listeningTime: '累計再生時間',
+      uniqueTracks: '曲数',
+      clients: 'クライアント分布',
+      transcoding: 'トランスコード比率',
+      directPlay: 'ダイレクト再生',
+      transcoded: 'トランスコード',
     },
   },
   review: {
@@ -866,7 +870,7 @@ const ja: Translation = {
   },
   how: {
     title: '仕組み',
-    subtitle: 'クライアント插件もアカウント登録もクラウドも不要。小さなコンテナが 1 つ、音楽サーバーのそばで動くだけ。',
+    subtitle: 'クライアントのプラグインもアカウント登録もクラウドも不要。小さなコンテナが 1 つ、音楽サーバーのそばで動くだけ。',
     step1: {
       title: 'getNowPlaying をポーリング',
       desc: '10 秒ごと（設定可能）に Subsonic API 経由で各 Navidrome サーバーの再生状況を確認——インターフェースはすでにあります。',
@@ -975,7 +979,7 @@ const ja: Translation = {
       changelog: '更新履歴',
       license: 'MIT ライセンス',
     },
-    version: 'v0.8.1 · MIT',
+    version: `${SITE_VERSION} · MIT`,
   },
   notfound: {
     title: 'このページは拍子を外しました。',
@@ -987,6 +991,7 @@ const ja: Translation = {
 const fr: Translation = {
   meta: {
     title: 'Navidrome Stat — statistiques d’écoute auto-hébergées pour Navidrome',
+    ogImageAlt: 'Navidrome Stat — aperçu du tableau de bord auto-hébergé de statistiques d’écoute',
     description:
       'Un seul tableau de bord pour toutes vos écoutes, quel que soit le client Subsonique, l’appareil ou le nombre de serveurs Navidrome. Temps d’écoute, tendances, classements et rétrospective annuelle. Auto-hébergé, open source, MIT.',
   },
@@ -1216,7 +1221,7 @@ const fr: Translation = {
       changelog: 'Journal des modifications',
       license: 'Licence MIT',
     },
-    version: 'v0.8.1 · MIT',
+    version: `${SITE_VERSION} · MIT`,
   },
   notfound: {
     title: 'Cette page a perdu le rythme.',
@@ -1228,6 +1233,7 @@ const fr: Translation = {
 const es: Translation = {
   meta: {
     title: 'Navidrome Stat — estadísticas de escucha autoalojadas para Navidrome',
+    ogImageAlt: 'Navidrome Stat — vista previa del panel autoalojado de estadísticas de escucha',
     description:
       'Un solo panel para todas tus reproducciones, sin importar el cliente Subsonic, el dispositivo o cuántos servidores Navidrome tengas. Tiempo de escucha, tendencias, rankings y resumen anual. Autoalojado, código abierto, MIT.',
   },
@@ -1457,7 +1463,7 @@ const es: Translation = {
       changelog: 'Registro de cambios',
       license: 'Licencia MIT',
     },
-    version: 'v0.8.1 · MIT',
+    version: `${SITE_VERSION} · MIT`,
   },
   notfound: {
     title: 'Esta página perdió el compás.',
@@ -1471,7 +1477,7 @@ export const ui: Record<Language, Translation> = { en, zh, 'zh-TW': zhTW, ja, fr
 export const CODE = {
   compose: `services:
   navidrome-stat:
-    image: stepaniah/navidrome-statistic:v0.8.1
+    image: stepaniah/navidrome-statistic:${SITE_VERSION}
     container_name: navidrome-stat
     user: "1000:1000"
     ports:
@@ -1495,7 +1501,7 @@ volumes:
   -e NAVIDROME_PASS=change-me \\
   -e STATS_API_TOKEN=$(openssl rand -hex 24) \\
   -v navidrome-stat-data:/data \\
-  stepaniah/navidrome-statistic:v0.8.1`,
+  stepaniah/navidrome-statistic:${SITE_VERSION}`,
   env: `NAVIDROME_URL=https://navidrome.example.com
 NAVIDROME_USER=example_user
 NAVIDROME_PASS=change-me

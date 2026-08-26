@@ -85,7 +85,10 @@
       if (!root.contains(event.target)) close();
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') close();
+      if (event.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+        close();
+        btn.focus();
+      }
     });
   }
 
@@ -93,11 +96,20 @@
     const btn = document.querySelector('[data-menu-btn]');
     const panel = document.querySelector('[data-menu-panel]');
     if (!btn || !panel) return;
-    btn.addEventListener('click', () => {
-      const willOpen = panel.hidden;
-      panel.hidden = !willOpen;
-      btn.setAttribute('aria-expanded', String(willOpen));
-      btn.setAttribute('aria-label', willOpen ? btn.dataset.labelClose || 'Close menu' : btn.dataset.labelOpen || 'Open menu');
+    const setOpen = (open) => {
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? btn.dataset.labelClose || 'Close menu' : btn.dataset.labelOpen || 'Open menu');
+    };
+    btn.addEventListener('click', () => setOpen(panel.hidden));
+    panel.addEventListener('click', (event) => {
+      if (event.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        btn.focus();
+      }
     });
   }
 
