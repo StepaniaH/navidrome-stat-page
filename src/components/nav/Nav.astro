@@ -52,7 +52,7 @@ const links = [
       </li>
     </ul>
 
-    <div class="ml-auto flex items-center gap-2.5">
+    <div class="ml-auto flex items-center self-stretch gap-2.5">
       <div class="relative hidden sm:flex items-center self-stretch" data-lang>
         <button
           type="button"
@@ -74,8 +74,7 @@ const links = [
           data-lang-menu
           role="listbox"
           aria-label={t.nav.language}
-          class="invisible absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-line bg-ink-2 p-1.5 opacity-0 shadow-xl shadow-black/40 transition-opacity duration-150"
-        >
+          class="invisible absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-line bg-ink-2 p-1.5 opacity-0 shadow-xl shadow-black/40 transition-opacity duration-150"        >
           {
             (Object.keys(LANGUAGES) as Language[]).map((code) => (
               <a
