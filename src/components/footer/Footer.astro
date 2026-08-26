@@ -1,0 +1,57 @@
+---
+import { LINKS } from '../../i18n/ui';
+import { localePath, type Language, type Translation } from '../../i18n/utils';
+import BrandMark from '../nav/BrandMark.astro';
+
+interface Props {
+  lang: Language;
+  t: Translation;
+}
+
+const { lang, t } = Astro.props;
+
+const links = [
+  { href: LINKS.github, label: t.footer.links.github },
+  { href: LINKS.docker, label: t.footer.links.docker },
+  { href: LINKS.producthunt, label: t.footer.links.ph },
+  { href: LINKS.issues, label: t.footer.links.issues },
+  { href: LINKS.changelog, label: t.footer.links.changelog },
+  { href: LINKS.license, label: t.footer.links.license },
+];
+---
+
+<footer class="mt-24 border-t border-line/60">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="gradient-border px-6 py-12 text-center sm:px-12" data-reveal>
+      <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t.footer.ctaTitle}</h2>
+      <a
+        href="#quickstart"
+        class="mt-7 inline-flex rounded-xl bg-gradient-to-r from-brand-orange via-brand-lime to-brand-cyan px-6 py-3 font-semibold text-ink transition-opacity hover:opacity-90"
+      >
+        {t.footer.ctaButton}
+      </a>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-6 text-sm text-mist sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-2.5">
+        <BrandMark idPrefix="ft" class="h-6 w-6" />
+        <span class="font-medium text-frost">Navidrome Stat</span>
+        <span class="font-mono text-xs">{t.footer.version}</span>
+      </div>
+      <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2">
+        {
+          links.map((link) => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-frost">
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+
+    <p class="mt-6 text-xs text-mist/70">
+      {t.footer.disclaimer}
+      <a href={localePath(lang, '/')} class="transition-colors hover:text-mist">navidrome-stat.pages.dev</a>
+    </p>
+  </div>
+</footer>

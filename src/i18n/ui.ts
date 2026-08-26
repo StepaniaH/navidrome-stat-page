@@ -38,6 +38,7 @@ const en = {
     menuClose: 'Close menu',
     language: 'Language',
     soon: 'soon',
+    skip: 'Skip to content',
   },
   hero: {
     badge: 'Self-hosted · Open source · MIT',
@@ -257,6 +258,7 @@ const zh: Translation = {
     menuClose: '关闭菜单',
     language: '语言',
     soon: '即将支持',
+    skip: '跳转到正文',
   },
   hero: {
     badge: '自托管 · 开源 · MIT',

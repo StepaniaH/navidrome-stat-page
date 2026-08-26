@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { getT } from '../i18n/utils';
+
+const t = getT('en');
+const tz = getT('zh');
+---
+
+<Base lang="en" title="404 — Navidrome Stat" description={t.notfound.desc} path="/404">
+  <section class="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-4 text-center">
+    <p class="text-gradient font-display text-8xl font-bold tracking-tight">404</p>
+    <h1 class="mt-6 font-display text-2xl font-semibold">{t.notfound.title}</h1>
+    <p class="mt-2 text-mist">{t.notfound.desc}</p>
+    <p class="mt-1 text-mist">{tz.notfound.title}{tz.notfound.desc}</p>
+    <a
+      href="/"
+      class="mt-8 rounded-xl border border-line bg-ink-2 px-5 py-2.5 text-sm transition-colors hover:border-brand-cyan/60 hover:text-frost"
+    >
+      {t.notfound.home}
+    </a>
+  </section>
+</Base>

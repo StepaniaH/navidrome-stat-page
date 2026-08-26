@@ -1,0 +1,83 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/noto-sans-sc/400.css';
+import '@fontsource/noto-sans-sc/700.css';
+import '../styles/global.css';
+
+import Nav from '../components/nav/Nav.astro';
+import Footer from '../components/footer/Footer.astro';
+import { LINKS, SITE_VERSION } from '../i18n/ui';
+import { getT, localePath, type Language } from '../i18n/utils';
+
+interface Props {
+  lang: Language;
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { lang, title, description, path = '/' } = Astro.props;
+const t = getT(lang);
+const site = Astro.site ?? new URL('https://navidrome-stat.pages.dev');
+const canonical = new URL(localePath(lang, path), site);
+const enUrl = new URL(localePath('en', path), site).href;
+const zhUrl = new URL(localePath('zh', path), site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Navidrome Statistic',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Docker, Linux',
+  softwareVersion: SITE_VERSION.replace('v', ''),
+  license: LINKS.license,
+  url: LINKS.github,
+  author: { '@type': 'Person', name: 'StepaniaH', url: 'https://github.com/StepaniaH' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="zh" href={zhUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Navidrome Stat" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={new URL('/og.png', site).href} />
+    <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'zh' ? 'en_US' : 'zh_CN'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og.png', site).href} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline src="/motion.js" defer></script>
+  </head>
+  <body class="min-h-screen bg-ink font-body text-frost">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-ink-2 focus:px-4 focus:py-2 focus:text-sm"
+    >
+      {t.nav.skip}
+    </a>
+    <Nav t={t} lang={lang} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer t={t} lang={lang} />
+  </body>
+</html>
