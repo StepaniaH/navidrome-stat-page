@@ -1,0 +1,118 @@
+---
+import { LINKS } from '../../i18n/ui';
+import type { Language, Translation } from '../../i18n/utils';
+
+interface Props {
+  lang: Language;
+  t: Translation;
+}
+
+const { t } = Astro.props;
+
+const barHeights = [
+  38, 64, 22, 80, 45, 70, 30, 90, 55, 25, 75, 48, 85, 35, 60, 20, 68, 42, 78, 28, 58, 88, 33, 52, 72, 24, 62, 44,
+];
+---
+
+<section class="relative overflow-hidden">
+  <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
+  <div class="absolute -left-32 top-10 h-96 w-96 rounded-full bg-brand-orange/15 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute -right-24 top-40 h-80 w-80 rounded-full bg-brand-cyan/15 blur-3xl" aria-hidden="true"></div>
+
+  <div class="relative mx-auto grid max-w-6xl gap-14 px-4 pb-36 pt-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pt-24">
+    <div>
+      <p
+        class="inline-flex items-center gap-2 rounded-full border border-line bg-ink-2/80 px-3.5 py-1.5 text-xs text-mist"
+        data-reveal
+      >
+        <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-brand-lime text-brand-lime"></span>
+        {t.hero.badge}
+      </p>
+      <h1
+        class="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
+        data-reveal
+        style="--reveal-delay: 60ms"
+      >
+        {t.hero.titleA}<span class="text-gradient">{t.hero.titleB}</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-mist" data-reveal style="--reveal-delay: 120ms">
+        {t.hero.subtitle}
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal style="--reveal-delay: 180ms">
+        <a
+          href="#quickstart"
+          class="rounded-xl bg-gradient-to-r from-brand-orange via-brand-lime to-brand-cyan px-6 py-3 font-semibold text-ink transition-opacity hover:opacity-90"
+        >
+          {t.hero.ctaDeploy}
+        </a>
+        <a
+          href={LINKS.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-xl border border-line bg-ink-2 px-6 py-3 font-medium transition-colors hover:border-mist/40"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+          </svg>
+          {t.hero.ctaGithub}
+        </a>
+      </div>
+    </div>
+
+    <div class="relative lg:justify-self-end" data-reveal style="--reveal-delay: 220ms">
+      <div class="float-slow w-full max-w-md">
+        <div class="glass-card p-5 shadow-2xl shadow-black/40">
+          <div class="flex items-center gap-2 text-xs text-mist">
+            <span class="pulse-dot h-2 w-2 rounded-full bg-brand-lime text-brand-lime"></span>
+            {t.hero.np.live}
+          </div>
+          <div class="mt-4 flex items-center gap-4">
+            <div
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-orange via-navy to-brand-cyan"
+            >
+              <svg class="h-6 w-6 text-frost" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M9 19.5a2.5 2.5 0 1 1-2.5-2.5c.55 0 1.08.18 1.5.5V6.2a1 1 0 0 1 .76-.97l9-2.25A1 1 0 0 1 19 3.95v11.8a2.5 2.5 0 1 1-2-2.45V6.53l-7 1.75v11.22Z"></path>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="truncate font-semibold">{t.hero.np.track}</p>
+              <p class="truncate text-sm text-mist">{t.hero.np.artist}</p>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="h-1.5 overflow-hidden rounded-full bg-line">
+              <div class="np-progress-fill h-full rounded-full bg-gradient-to-r from-brand-orange to-brand-cyan"></div>
+            </div>
+            <div class="mt-1.5 flex justify-between font-mono text-[11px] text-mist">
+              <span>{t.hero.np.elapsed}</span>
+              <span>{t.hero.np.total}</span>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center gap-2 border-t border-line/60 pt-3 text-xs text-mist">
+            <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="2" y="2.75" width="12" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.25"></rect>
+              <path d="M5.5 14h5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"></path>
+            </svg>
+            {t.hero.np.client}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="pointer-events-none absolute bottom-0 left-0 right-0 flex h-28 items-end gap-[3px] px-2 opacity-70"
+    aria-hidden="true"
+  >
+    {
+      barHeights.map((h, i) => (
+        <div
+          class="eq-bar flex-1 rounded-t-sm"
+          style={`--i:${i};height:${h}%;background:linear-gradient(to top, rgba(249,115,22,0.45), rgba(163,230,53,0.35), rgba(34,211,238,0.5))`}
+        />
+      ))
+    }
+  </div>
+</section>

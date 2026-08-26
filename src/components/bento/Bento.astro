@@ -1,0 +1,185 @@
+---
+import type { Language, Translation } from '../../i18n/utils';
+
+interface Props {
+  lang: Language;
+  t: Translation;
+}
+
+const { t } = Astro.props;
+
+const demoRows = [
+  { tile: 'B', from: '#F97316', to: '#7C2D12', track: 'So What', meta: 'DSub · 2m ago', live: false },
+  { tile: 'T', from: '#22D3EE', to: '#155E75', track: 'Take Five', meta: 'Symfonium · 14m ago', live: false },
+  { tile: 'G', from: '#A3E635', to: '#3F6212', track: 'Goodbye Pork Pie Hat', meta: 'Feishin · 31m ago', live: false },
+];
+
+const themeDots = [
+  { name: 'Latte', bg: '#EFF1F5' },
+  { name: 'Frappé', bg: '#303446' },
+  { name: 'Macchiato', bg: '#24273A' },
+  { name: 'Mocha', bg: '#1E1E2E' },
+  { name: 'Nord', bg: '#2E3440' },
+];
+
+const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deutsch'];
+---
+
+<section id="features" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-4 pt-24 sm:px-6">
+    <div class="max-w-2xl" data-reveal>
+      <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t.bento.title}</h2>
+      <p class="mt-4 text-lg leading-relaxed text-mist">{t.bento.subtitle}</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Now playing, live -->
+      <article class="glass-card p-6 transition-colors hover:border-mist/30 lg:col-span-2" data-reveal>
+        <div class="flex items-center gap-2 text-xs text-mist">
+          <span class="pulse-dot h-2 w-2 rounded-full bg-brand-lime text-brand-lime"></span>
+          {t.bento.np.title}
+        </div>
+        <ul class="mt-4 space-y-3">
+          {
+            demoRows.map((row) => (
+              <li class="flex items-center gap-3 rounded-xl border border-line/70 bg-ink/50 px-3.5 py-3">
+                <span
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-display text-sm font-bold text-frost"
+                  style={`background:linear-gradient(135deg, ${row.from}, ${row.to})`}
+                >
+                  {row.tile}
+                </span>
+                <div class="min-w-0">
+                  <p class="truncate text-sm font-medium">{row.track}</p>
+                  <p class="truncate text-xs text-mist">{row.meta}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+
+      <!-- Every client, one history -->
+      <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal style="--reveal-delay: 80ms">
+        <h3 class="font-display text-lg font-semibold">{t.bento.aggregate.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.aggregate.desc}</p>
+        <svg class="mt-auto w-full pt-6 text-mist" viewBox="0 0 280 110" fill="none" aria-hidden="true">
+          <rect x="8" y="12" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
+          <rect x="8" y="64" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
+          <rect x="220" y="12" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
+          <rect x="220" y="64" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
+          <path d="M60 29c30 0 40 26 80 26M60 81c30 0 40-26 80-26M220 29c-30 0-40 26-80 26M220 81c-30 0-40-26-80-26" stroke="url(#bento-flow)" stroke-width="1.5" stroke-dasharray="3 4"></path>
+          <circle cx="140" cy="55" r="17" fill="none" stroke="#22D3EE" stroke-opacity="0.9" stroke-width="1.5"></circle>
+          <path d="M137 61a4.5 4.5 0 1 1-4.5-4.5c.9 0 1.8.3 2.5.8V51l9-2.2v8.7a4.5 4.5 0 1 1-3-4.2v-4.8l-4 1v8.5Z" fill="#DBE6F4" transform="translate(3 -1) scale(0.82)"></path>
+          <path d="M133 47.5c4 0 8 0 14 0M133 62c4 0 8 0 14 0" stroke="url(#bento-flow)" stroke-width="1.5"></path>
+          <defs>
+            <linearGradient id="bento-flow" x1="0" y1="0" x2="280" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#F97316"></stop>
+              <stop offset="0.5" stop-color="#A3E635"></stop>
+              <stop offset="1" stop-color="#22D3EE"></stop>
+            </linearGradient>
+          </defs>
+        </svg>
+      </article>
+
+      <!-- Charts -->
+      <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal>
+        <h3 class="font-display text-lg font-semibold">{t.bento.charts.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.charts.desc}</p>
+        <img
+          src="/screenshots/dashboard-frappe-charts.png"
+          alt={t.bento.charts.title}
+          width="1280"
+          height="720"
+          loading="lazy"
+          decoding="async"
+          class="mt-auto w-full rounded-lg border border-line/70 pt-0"
+        />
+      </article>
+
+      <!-- Year in review -->
+      <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal style="--reveal-delay: 80ms">
+        <h3 class="font-display text-lg font-semibold">{t.bento.review.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.review.desc}</p>
+        <div class="mt-auto flex flex-wrap gap-2 pt-6">
+          <span class="rounded-lg border border-line bg-ink/60 px-2.5 py-1 font-mono text-xs text-brand-lime">3,847</span>
+          <span class="rounded-lg border border-line bg-ink/60 px-2.5 py-1 font-mono text-xs text-brand-cyan">412 h</span>
+          <span class="rounded-lg border border-line bg-ink/60 px-2.5 py-1 font-mono text-xs text-brand-orange">21 d</span>
+          <a href="#review" class="ml-auto text-xs text-mist transition-colors hover:text-frost">→ {t.nav.review}</a>
+        </div>
+      </article>
+
+      <!-- Cover art -->
+      <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal style="--reveal-delay: 160ms">
+        <h3 class="font-display text-lg font-semibold">{t.bento.cover.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.cover.desc}</p>
+        <div class="mt-auto grid grid-cols-4 gap-2.5 pt-6" aria-hidden="true">
+          <span class="flex aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-brand-orange to-navy font-display text-lg font-bold text-frost">K</span>
+          <span class="flex aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-brand-cyan to-navy font-display text-lg font-bold text-frost">B</span>
+          <span class="flex aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-brand-lime to-navy font-display text-lg font-bold text-frost">A</span>
+          <span class="flex aspect-square items-center justify-center rounded-lg border border-dashed border-line font-display text-lg font-bold text-mist">?</span>
+        </div>
+      </article>
+
+      <!-- Privacy (wide) -->
+      <article class="glass-card p-6 transition-colors hover:border-mist/30 lg:col-span-2" data-reveal>
+        <div class="flex items-start gap-4">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-cyan/10 text-brand-cyan">
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 2 4 4.5v4c0 3.6 2.4 6.9 6 8 3.6-1.1 6-4.4 6-8v-4L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+              <path d="m7.5 9.8 1.8 1.8 3.2-3.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold">{t.bento.privacy.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.privacy.desc}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {
+                t.bento.privacy.points.map((point) => (
+                  <span class="rounded-full border border-line bg-ink/60 px-3 py-1 text-xs text-frost">{point}</span>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Themes -->
+      <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal style="--reveal-delay: 80ms">
+        <h3 class="font-display text-lg font-semibold">{t.bento.themesCard.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.themesCard.desc}</p>
+        <div class="mt-auto flex items-center gap-2 pt-6">
+          {
+            themeDots.map((dot) => (
+              <a
+                href="#themes"
+                title={dot.name}
+                class="h-6 w-6 rounded-full border border-line transition-transform hover:scale-110"
+                style={`background:${dot.bg}`}
+              />
+            ))
+          }
+          <a href="#themes" class="ml-auto text-xs text-mist transition-colors hover:text-frost">→ {t.nav.themes}</a>
+        </div>
+      </article>
+
+      <!-- Languages (slim, full width) -->
+      <article
+        class="glass-card flex flex-col gap-4 p-6 transition-colors hover:border-mist/30 md:col-span-2 lg:col-span-3 lg:flex-row lg:items-center"
+        data-reveal
+      >
+        <div class="lg:w-1/3">
+          <h3 class="font-display text-lg font-semibold">{t.bento.langs.title}</h3>
+        </div>
+        <p class="text-sm leading-relaxed text-mist lg:w-2/5">{t.bento.langs.desc}</p>
+        <div class="flex flex-wrap gap-2 lg:ml-auto">
+          {
+            langChips.map((chip) => (
+              <span class="rounded-lg border border-line bg-ink/60 px-3 py-1.5 text-sm text-frost">{chip}</span>
+            ))
+          }
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
