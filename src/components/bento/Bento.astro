@@ -9,17 +9,17 @@ interface Props {
 const { t } = Astro.props;
 
 const demoRows = [
-  { tile: 'B', from: '#F97316', to: '#7C2D12', track: 'So What', meta: 'DSub · 2m ago', live: false },
-  { tile: 'T', from: '#22D3EE', to: '#155E75', track: 'Take Five', meta: 'Symfonium · 14m ago', live: false },
-  { tile: 'G', from: '#A3E635', to: '#3F6212', track: 'Goodbye Pork Pie Hat', meta: 'Feishin · 31m ago', live: false },
+  { tile: 'B', tone: 'text-brand-orange', track: 'So What', meta: 'DSub · 2m ago' },
+  { tile: 'T', tone: 'text-brand-cyan', track: 'Take Five', meta: 'Symfonium · 14m ago' },
+  { tile: 'G', tone: 'text-brand-lime', track: 'Goodbye Pork Pie Hat', meta: 'Feishin · 31m ago' },
 ];
 
 const themeDots = [
-  { name: 'Latte', bg: '#EFF1F5' },
-  { name: 'Frappé', bg: '#303446' },
-  { name: 'Macchiato', bg: '#24273A' },
-  { name: 'Mocha', bg: '#1E1E2E' },
-  { name: 'Nord', bg: '#2E3440' },
+  { name: 'Latte', bg: '#EFF1F5', accent: '#7287FD' },
+  { name: 'Frappé', bg: '#303446', accent: '#A6D189' },
+  { name: 'Mocha', bg: '#1E1E2E', accent: '#B4BEFE' },
+  { name: 'Dracula', bg: '#282A36', accent: '#BD93F9' },
+  { name: 'Gruvbox', bg: '#282828', accent: '#FABD2F' },
 ];
 
 const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deutsch'];
@@ -44,8 +44,7 @@ const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deut
             demoRows.map((row) => (
               <li class="flex items-center gap-3 rounded-xl border border-line/70 bg-ink/50 px-3.5 py-3">
                 <span
-                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-display text-sm font-bold text-frost"
-                  style={`background:linear-gradient(135deg, ${row.from}, ${row.to})`}
+                  class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy font-display text-sm font-bold ${row.tone}`}
                 >
                   {row.tile}
                 </span>
@@ -63,22 +62,69 @@ const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deut
       <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal style="--reveal-delay: 80ms">
         <h3 class="font-display text-lg font-semibold">{t.bento.aggregate.title}</h3>
         <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.aggregate.desc}</p>
-        <svg class="mt-auto w-full pt-6 text-mist" viewBox="0 0 280 110" fill="none" aria-hidden="true">
-          <rect x="8" y="12" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
-          <rect x="8" y="64" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
-          <rect x="220" y="12" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
-          <rect x="220" y="64" width="52" height="34" rx="8" stroke="currentColor" stroke-opacity="0.6"></rect>
-          <path d="M60 29c30 0 40 26 80 26M60 81c30 0 40-26 80-26M220 29c-30 0-40 26-80 26M220 81c-30 0-40-26-80-26" stroke="url(#bento-flow)" stroke-width="1.5" stroke-dasharray="3 4"></path>
-          <circle cx="140" cy="55" r="17" fill="none" stroke="#22D3EE" stroke-opacity="0.9" stroke-width="1.5"></circle>
-          <path d="M137 61a4.5 4.5 0 1 1-4.5-4.5c.9 0 1.8.3 2.5.8V51l9-2.2v8.7a4.5 4.5 0 1 1-3-4.2v-4.8l-4 1v8.5Z" fill="#DBE6F4" transform="translate(3 -1) scale(0.82)"></path>
-          <path d="M133 47.5c4 0 8 0 14 0M133 62c4 0 8 0 14 0" stroke="url(#bento-flow)" stroke-width="1.5"></path>
+        <svg class="mt-auto w-full pt-6" viewBox="0 0 300 150" fill="none" role="img" aria-label={t.bento.aggregate.title}>
           <defs>
-            <linearGradient id="bento-flow" x1="0" y1="0" x2="280" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#F97316"></stop>
-              <stop offset="0.5" stop-color="#A3E635"></stop>
-              <stop offset="1" stop-color="#22D3EE"></stop>
+            <linearGradient id="bento-wire" x1="0" y1="0" x2="1" y2="0">
+              <stop stop-color="#8FA3BF" stop-opacity="0.25"></stop>
+              <stop offset="0.5" stop-color="#22D3EE" stop-opacity="0.7"></stop>
+              <stop offset="1" stop-color="#8FA3BF" stop-opacity="0.25"></stop>
+            </linearGradient>
+            <linearGradient id="bento-wire2" x1="0" y1="0" x2="1" y2="0">
+              <stop stop-color="#8FA3BF" stop-opacity="0.2"></stop>
+              <stop offset="1" stop-color="#22D3EE" stop-opacity="0.55"></stop>
             </linearGradient>
           </defs>
+
+          <!-- client nodes -->
+          <g font-family="var(--font-mono)" font-size="9" fill="#8FA3BF">
+            <g>
+              <rect x="6" y="22" width="74" height="26" rx="8" fill="#101A2E" stroke="#1D2C44"></rect>
+              <circle cx="20" cy="35" r="3" fill="#F97316" fill-opacity="0.85"></circle>
+              <text x="30" y="38.5">DSub</text>
+            </g>
+            <g>
+              <rect x="6" y="62" width="74" height="26" rx="8" fill="#101A2E" stroke="#1D2C44"></rect>
+              <circle cx="20" cy="75" r="3" fill="#22D3EE" fill-opacity="0.85"></circle>
+              <text x="30" y="78.5">Symfonium</text>
+            </g>
+            <g>
+              <rect x="6" y="102" width="74" height="26" rx="8" fill="#101A2E" stroke="#1D2C44"></rect>
+              <circle cx="20" cy="115" r="3" fill="#A3E635" fill-opacity="0.85"></circle>
+              <text x="30" y="118.5">Feishin</text>
+            </g>
+          </g>
+
+          <!-- converging wires -->
+          <path d="M80 35 C 118 35, 122 68, 148 72" stroke="url(#bento-wire)" stroke-width="1.5"></path>
+          <path d="M80 75 C 108 75, 120 75, 148 75" stroke="url(#bento-wire)" stroke-width="1.5"></path>
+          <path d="M80 115 C 118 115, 122 82, 148 78" stroke="url(#bento-wire)" stroke-width="1.5"></path>
+
+          <!-- server hub -->
+          <g>
+            <rect x="148" y="56" width="52" height="38" rx="10" fill="#101A2E" stroke="#22D3EE" stroke-opacity="0.55" stroke-width="1.2"></rect>
+            <g stroke="#8FA3BF" stroke-width="1.4" stroke-linecap="round">
+              <path d="M158 68h32M158 75h32M158 82h20"></path>
+            </g>
+            <circle cx="188" cy="68" r="1.8" fill="#22D3EE"></circle>
+            <circle cx="188" cy="75" r="1.8" fill="#22D3EE" fill-opacity="0.7"></circle>
+            <text x="174" y="110" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#8FA3BF">Navidrome</text>
+          </g>
+
+          <!-- wire to dashboard -->
+          <path d="M200 75 C 226 75, 232 75, 248 75" stroke="url(#bento-wire2)" stroke-width="1.5"></path>
+          <path d="m244 71 5 4-5 4" stroke="#22D3EE" stroke-opacity="0.7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+
+          <!-- dashboard node -->
+          <g>
+            <rect x="252" y="56" width="42" height="38" rx="8" fill="#101A2E" stroke="#1D2C44"></rect>
+            <g fill="#22D3EE">
+              <rect x="258" y="82" width="5" height="7" rx="1" fill-opacity="0.9"></rect>
+              <rect x="266" y="76" width="5" height="13" rx="1" fill-opacity="0.7"></rect>
+              <rect x="274" y="70" width="5" height="19" rx="1" fill-opacity="0.85"></rect>
+              <rect x="282" y="64" width="5" height="25" rx="1" fill-opacity="0.55"></rect>
+            </g>
+            <text x="273" y="110" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#8FA3BF">Stat</text>
+          </g>
         </svg>
       </article>
 
@@ -86,15 +132,25 @@ const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deut
       <article class="glass-card flex flex-col p-6 transition-colors hover:border-mist/30" data-reveal>
         <h3 class="font-display text-lg font-semibold">{t.bento.charts.title}</h3>
         <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.charts.desc}</p>
-        <img
-          src="/screenshots/dashboard-frappe-charts.webp"
-          alt={t.bento.charts.title}
-          width="1280"
-          height="720"
-          loading="lazy"
-          decoding="async"
-          class="mt-auto w-full rounded-lg border border-line/70 pt-0"
-        />
+        <div class="mt-auto flex flex-col gap-5 pt-6" aria-hidden="true">
+          <div class="flex h-20 items-end gap-1.5 rounded-lg border border-line/70 bg-ink/50 px-3 pb-2 pt-3">
+            {
+              [34, 52, 40, 66, 58, 84, 72, 95, 62, 78, 48, 70].map((h, i) => (
+                <span
+                  class={`flex-1 rounded-t-sm ${i === 7 ? 'bg-brand-cyan' : 'bg-mist/25'}`}
+                  style={`height:${h}%`}
+                />
+              ))
+            }
+          </div>
+          <div class="grid grid-cols-12 gap-[3px] rounded-lg border border-line/70 bg-ink/50 p-3">
+            {Array.from({ length: 60 }, (_, i) => {
+              const v = ((i * 37) % 19) / 19;
+              const a = (0.08 + v * 0.55).toFixed(2);
+              return <span class="aspect-square rounded-[2px]" style={`background:rgba(34,211,238,${a})`} />;
+            })}
+          </div>
+        </div>
       </article>
 
       <!-- Year in review -->
@@ -114,9 +170,9 @@ const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deut
         <h3 class="font-display text-lg font-semibold">{t.bento.cover.title}</h3>
         <p class="mt-2 text-sm leading-relaxed text-mist">{t.bento.cover.desc}</p>
         <div class="mt-auto grid grid-cols-4 gap-2.5 pt-6" aria-hidden="true">
-          <span class="flex aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-brand-orange to-navy font-display text-lg font-bold text-frost">K</span>
-          <span class="flex aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-brand-cyan to-navy font-display text-lg font-bold text-frost">B</span>
-          <span class="flex aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-brand-lime to-navy font-display text-lg font-bold text-frost">A</span>
+          <span class="flex aspect-square items-center justify-center rounded-lg bg-navy font-display text-lg font-bold text-brand-orange">K</span>
+          <span class="flex aspect-square items-center justify-center rounded-lg bg-navy font-display text-lg font-bold text-brand-cyan">B</span>
+          <span class="flex aspect-square items-center justify-center rounded-lg bg-navy font-display text-lg font-bold text-brand-lime">A</span>
           <span class="flex aspect-square items-center justify-center rounded-lg border border-dashed border-line font-display text-lg font-bold text-mist">?</span>
         </div>
       </article>
@@ -155,7 +211,7 @@ const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deut
                 href="#themes"
                 title={dot.name}
                 class="h-6 w-6 rounded-full border border-line transition-transform hover:scale-110"
-                style={`background:${dot.bg}`}
+                style={`background:${dot.bg};box-shadow:inset 0 0 0 2px ${dot.accent}`}
               />
             ))
           }

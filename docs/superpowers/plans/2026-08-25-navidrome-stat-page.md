@@ -158,3 +158,5 @@ Trust：双卡（"Private by default" 盾牌 4 项 check 图标 / "Honest limita
 - 检查并删除一切无用/废弃文件；最终提交 `docs: readme and final polish`
 
 **Interfaces（全局）**：字典键见 Task 2；`data-reveal`、`data-count`、`data-lang-btn/menu`、`data-menu-btn/panel`、`data-theme-btn/img`、`data-start-tab`、`data-copy` 为 motion.js 与组件间的完整契约，任何组件不得引入其他 JS 入口。
+
+**2026-08-26 修订**：主题演示由真实截图改为纯 CSS 模拟仪表盘（`src/data/themes.ts` 十套色板 + `--dm-*` 变量），契约新增 `data-theme-pill`、`data-theme-scope`、`data-review-open/close`、`data-np-fill`、`data-np-current`；年度回顾 CTA 打开站内 demo 弹窗而非外跳 GitHub；截图目录已删除。

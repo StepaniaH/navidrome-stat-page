@@ -67,19 +67,39 @@ body {
   backdrop-filter: blur(12px);
 }
 
-.gradient-border {
-  border: 1px solid transparent;
-  border-radius: 1.25rem;
-  background:
-    linear-gradient(var(--color-ink-2), var(--color-ink-2)) padding-box,
-    linear-gradient(100deg, var(--color-brand-orange), var(--color-brand-lime), var(--color-brand-cyan)) border-box;
+html.modal-open {
+  overflow: hidden;
 }
 
-.text-gradient {
-  background: linear-gradient(95deg, var(--color-brand-orange), var(--color-brand-lime) 50%, var(--color-brand-cyan));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.review-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(26rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  border: 1px solid var(--color-line);
+  border-radius: 1.25rem;
+  background: var(--color-ink-2);
+  color: var(--color-frost);
+  padding: 1.5rem;
+  box-shadow: 0 25px 60px -12px rgb(0 0 0 / 0.6);
+}
+
+.review-modal::backdrop {
+  background: rgb(11 18 32 / 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.review-modal[open] {
+  animation: modal-in 0.22s ease;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
 }
 
 .bg-grid {
@@ -120,19 +140,6 @@ body {
   }
   to {
     transform: scaleY(1);
-  }
-}
-
-.np-progress-fill {
-  animation: progress 30s linear infinite;
-}
-
-@keyframes progress {
-  from {
-    width: 12%;
-  }
-  to {
-    width: 96%;
   }
 }
 
@@ -184,9 +191,12 @@ body {
   }
 
   .eq-bar,
-  .np-progress-fill,
   .float-slow,
   .pulse-dot::after {
     animation: none !important;
+  }
+
+  .review-modal[open] {
+    animation: none;
   }
 }

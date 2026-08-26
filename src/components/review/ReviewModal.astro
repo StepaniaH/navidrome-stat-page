@@ -1,0 +1,96 @@
+---
+import type { Language, Translation } from '../../i18n/utils';
+
+interface Props {
+  lang: Language;
+  t: Translation;
+}
+
+const { t } = Astro.props;
+
+const tracks = [
+  { tile: 'B', tone: 'text-brand-orange', bar: 'bg-brand-orange', width: '100%', name: 'Blue in Green', plays: 214 },
+  { tile: 'T', tone: 'text-brand-cyan', bar: 'bg-brand-cyan', width: '82%', name: 'Take Five', plays: 176 },
+  { tile: 'S', tone: 'text-brand-lime', bar: 'bg-brand-lime', width: '68%', name: 'So What', plays: 146 },
+];
+
+const stats = [
+  { value: '412', label: t.review.hours },
+  { value: '486', label: t.review.artists },
+  { value: '21', label: t.review.streak },
+];
+---
+
+<dialog
+  data-review-modal
+  class="review-modal"
+  aria-labelledby="review-modal-title"
+>
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <p class="font-mono text-xs text-mist">{t.review.modal.tag}</p>
+      <h3 id="review-modal-title" class="mt-1 font-display text-2xl font-bold tracking-tight">
+        {t.review.title}
+      </h3>
+    </div>
+    <button
+      type="button"
+      data-review-close
+      aria-label={t.review.modal.close}
+      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line text-mist transition-colors hover:border-mist/40 hover:text-frost"
+    >
+      <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="m4 4 8 8m0-8-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mt-6 rounded-xl border border-line bg-ink/60 p-5 text-center">
+    <p class="font-display text-5xl font-bold tabular-nums tracking-tight text-brand-orange" data-count="3847">0</p>
+    <p class="mt-1 text-sm text-mist">{t.review.plays}</p>
+  </div>
+
+  <dl class="mt-3 grid grid-cols-3 gap-3 text-center">
+    {
+      stats.map((stat) => (
+        <div class="rounded-xl border border-line bg-ink/60 px-2 py-4">
+          <dd class="font-display text-xl font-bold tabular-nums text-frost">{stat.value}</dd>
+          <dt class="mt-1 text-xs text-mist">{stat.label}</dt>
+        </div>
+      ))
+    }
+  </dl>
+
+  <p class="mt-6 text-xs uppercase tracking-widest text-mist">{t.review.topTrack}</p>
+  <ul class="mt-3 space-y-2.5">
+    {
+      tracks.map((track) => (
+        <li class="flex items-center gap-3 rounded-xl border border-line bg-ink/60 px-3.5 py-2.5">
+          <span class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-navy font-display text-sm font-bold ${track.tile === 'B' ? 'text-brand-orange' : track.tile === 'T' ? 'text-brand-cyan' : 'text-brand-lime'}`} aria-hidden="true">
+            {track.tile}
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="flex items-baseline justify-between gap-3">
+              <span class="truncate text-sm font-medium">{track.name}</span>
+              <span class="font-mono text-xs text-mist">{track.plays}</span>
+            </span>
+            <span class="mt-1.5 block h-1 overflow-hidden rounded-full bg-line">
+              <span class={`block h-full rounded-full ${track.bar}`} style={`width:${track.width}`} />
+            </span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="mt-5 text-xs leading-relaxed text-mist/80">{t.review.disclaimer}</p>
+
+  <div class="mt-5 flex flex-wrap items-center gap-3 border-t border-line/60 pt-5">
+    <a href="#quickstart" data-review-close class="rounded-xl bg-brand-orange px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-[#fb8b3c]">
+      {t.review.modal.deploy}
+    </a>
+    <a href="#how" data-review-close class="text-sm text-mist transition-colors hover:text-frost">
+      {t.review.modal.how} →
+    </a>
+  </div>
+</dialog>

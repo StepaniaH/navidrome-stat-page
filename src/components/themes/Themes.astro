@@ -1,4 +1,5 @@
 ---
+import { THEMES, DEFAULT_THEME_ID, themeVarsCss } from '../../data/themes';
 import type { Language, Translation } from '../../i18n/utils';
 
 interface Props {
@@ -8,19 +9,25 @@ interface Props {
 
 const { t } = Astro.props;
 
-const palettes = [
-  { name: 'Catppuccin Latte', bg: '#EFF1F5', accent: '#8839EF' },
-  { name: 'Catppuccin Frappé', bg: '#303446', accent: '#CA9EE6' },
-  { name: 'Catppuccin Macchiato', bg: '#24273A', accent: '#B7BDF8' },
-  { name: 'Catppuccin Mocha', bg: '#1E1E2E', accent: '#CBA6F7' },
-  { name: 'Nord', bg: '#2E3440', accent: '#88C0D0' },
-  { name: 'Dracula', bg: '#282A36', accent: '#BD93F9' },
-  { name: 'Tokyo Night', bg: '#1A1B26', accent: '#7AA2F7' },
-  { name: 'Gruvbox', bg: '#282828', accent: '#FABD2F' },
-  { name: 'Solarized Dark', bg: '#002B36', accent: '#268BD2' },
-  { name: 'Solarized Light', bg: '#FDF6E3', accent: '#B58900' },
+const donutSegments = [
+  { label: 'DSub', value: 20, color: 'var(--dm-c1)' },
+  { label: 'Feishin', value: 16, color: 'var(--dm-c2)' },
+  { label: 'Symfonium', value: 12, color: 'var(--dm-c3)' },
+  { label: 'web client', value: 8, color: 'var(--dm-c4)' },
+  { label: 'NavidromeUI', value: 3, color: 'var(--dm-accent)' },
 ];
+const donutTotal = donutSegments.reduce((sum, s) => sum + s.value, 0);
+const CIRC = 2 * Math.PI * 40;
+let cum = 0;
+const donutArmed = donutSegments.map((s) => {
+  const len = (s.value / donutTotal) * CIRC;
+  const seg = { ...s, len: len.toFixed(1), offset: (-cum).toFixed(1) };
+  cum += len;
+  return seg;
+});
 ---
+
+<style is:inline set:html={themeVarsCss()} />
 
 <section id="themes" class="scroll-mt-20">
   <div class="mx-auto max-w-6xl px-4 pt-24 sm:px-6">
@@ -46,53 +53,403 @@ const palettes = [
         <span class="w-14" aria-hidden="true"></span>
       </div>
 
-      <div class="relative aspect-[16/9]">
-        <img
-          data-theme-panel="frappe"
-          src="/screenshots/dashboard-frappe-top.webp"
-          alt={t.themes.alt.replace('{name}', t.themes.frappe)}
-          width="1280"
-          height="720"
-          loading="lazy"
-          decoding="async"
-          class="absolute inset-0 h-full w-full object-cover object-top"
-        />
-        <img
-          data-theme-panel="gruvbox"
-          src="/screenshots/dashboard-gruvbox.webp"
-          alt={t.themes.alt.replace('{name}', t.themes.gruvbox)}
-          width="1280"
-          height="720"
-          loading="lazy"
-          decoding="async"
-          class="absolute inset-0 h-full w-full object-cover object-top"
-          hidden
-        />
+      <div
+        class:list={['dmx-scope', `dm-${DEFAULT_THEME_ID}`]}
+        data-theme-scope
+        data-active-theme={DEFAULT_THEME_ID}
+        role="img"
+        aria-label={t.themes.mockLabel}
+      >
+        <div class="dmx-root" aria-hidden="true">
+          <!-- top bar -->
+          <div class="dmx-topbar">
+            <span class="dmx-brand-dot"></span>
+            <span class="dmx-title">{t.themes.mock.title}</span>
+            <span class="dmx-top-actions">
+              <span class="dmx-chip">{t.themes.mock.range}<i class="dmx-caret"></i></span>
+              <span class="dmx-chip">{t.themes.mock.servers}<i class="dmx-caret"></i></span>
+              <span class="dmx-live"><span class="dmx-live-dot"></span>{t.themes.mock.live}</span>
+            </span>
+          </div>
+
+          <!-- now playing row -->
+          <div class="dmx-card dmx-np">
+            <div class="dmx-np-head"><span class="dmx-live-dot"></span>{t.themes.mock.nowPlaying} · 1</div>
+            <div class="dmx-np-row">
+              <span class="dmx-cover">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19.5a2.5 2.5 0 1 1-2.5-2.5c.55 0 1.08.18 1.5.5V6.2a1 1 0 0 1 .76-.97l9-2.25A1 1 0 0 1 19 3.95v11.8a2.5 2.5 0 1 1-2-2.45V6.53l-7 1.75v11.22Z"/></svg>
+              </span>
+              <span class="dmx-np-meta">
+                <b>Blue in Green</b>
+                <small>Miles Davis · {t.themes.mock.clientTag}</small>
+              </span>
+              <span class="dmx-np-time">1:05</span>
+            </div>
+          </div>
+
+          <!-- stat cards -->
+          <div class="dmx-stats">
+            <div class="dmx-card">
+              <small>{t.themes.mock.plays}</small>
+              <strong>65</strong>
+              <em>↑ 4.8%</em>
+            </div>
+            <div class="dmx-card">
+              <small>{t.themes.mock.listeningTime}</small>
+              <strong class="dmx-num-c2">3h 53m</strong>
+              <em>↑ 10.2%</em>
+            </div>
+            <div class="dmx-card">
+              <small>{t.themes.mock.uniqueTracks}</small>
+              <strong class="dmx-num-c3">16</strong>
+              <em>26 · 2.5/day</em>
+            </div>
+          </div>
+
+          <!-- charts -->
+          <div class="dmx-charts">
+            <div class="dmx-card">
+              <small class="dmx-chart-title">{t.themes.mock.clients}</small>
+              <div class="dmx-chart-body">
+                <svg viewBox="0 0 100 100" class="dmx-donut">
+                  {
+                    donutArmed.map((seg) => (
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke={seg.color}
+                        stroke-width="14"
+                        stroke-dasharray={`${seg.len} ${CIRC - Number(seg.len)}`}
+                        stroke-dashoffset={seg.offset}
+                        transform="rotate(-90 50 50)"
+                      />
+                    ))
+                  }
+                </svg>
+                <ul class="dmx-legend">
+                  {
+                    donutArmed.map((seg) => (
+                      <li>
+                        <i style={`background:${seg.color}`} />
+                        {seg.label}
+                        <b>{seg.value}</b>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
+            <div class="dmx-card">
+              <small class="dmx-chart-title">{t.themes.mock.transcoding}</small>
+              <div class="dmx-chart-body">
+                <svg viewBox="0 0 100 100" class="dmx-donut">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--dm-c2)" stroke-width="18" stroke-dasharray={`${(CIRC * 0.87).toFixed(1)} ${(CIRC * 0.13).toFixed(1)}`} transform="rotate(-90 50 50)" />
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--dm-c3)" stroke-width="18" stroke-dasharray={`${(CIRC * 0.13).toFixed(1)} ${(CIRC * 0.87).toFixed(1)}`} stroke-dashoffset={(CIRC * -0.87).toFixed(1)} transform="rotate(-90 50 50)" />
+                </svg>
+                <ul class="dmx-legend">
+                  <li><i style="background:var(--dm-c2)" />{t.themes.mock.directPlay}<b>87%</b></li>
+                  <li><i style="background:var(--dm-c3)" />{t.themes.mock.transcoded}<b>13%</b></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="mt-6 flex flex-wrap items-center gap-4" data-reveal>
-      <div class="flex gap-2" role="tablist" aria-label={t.themes.title}>
-        <button type="button" role="tab" aria-selected="true" data-theme-btn="frappe" class="tab-btn">
-          {t.themes.frappe}
-        </button>
-        <button type="button" role="tab" aria-selected="false" data-theme-btn="gruvbox" class="tab-btn">
-          {t.themes.gruvbox}
-        </button>
-      </div>
-
-      <div class="ml-auto flex flex-wrap items-center gap-2.5">
-        <span class="mr-1 text-xs text-mist">{t.themes.paletteNote}</span>
-        {
-          palettes.map((palette) => (
+    <div class="mt-6 flex flex-wrap items-center gap-2" data-reveal>
+      {
+        THEMES.map((theme) => (
+          <button
+            type="button"
+            data-theme-pill={theme.id}
+            aria-pressed={theme.id === DEFAULT_THEME_ID ? 'true' : 'false'}
+            class="tab-btn inline-flex items-center gap-2"
+          >
             <span
-              class="h-6 w-6 rounded-full border border-line/80 transition-transform hover:scale-110"
-              title={palette.name}
-              style={`background:${palette.bg};box-shadow:inset 0 0 0 2px ${palette.accent}`}
+              class="h-3.5 w-3.5 rounded-full border border-white/20"
+              style={`background:${theme.bg};box-shadow:inset 0 0 0 2px ${theme.accent}`}
+              aria-hidden="true"
             />
-          ))
-        }
-      </div>
+            {theme.name}
+          </button>
+        ))
+      }
     </div>
   </div>
 </section>
+
+<style>
+  /* ---- simulated dashboard, themed entirely via --dm-* custom properties ---- */
+
+  .dmx-scope {
+    container-type: inline-size;
+  }
+
+  .dmx-root {
+    aspect-ratio: 16 / 9.6;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5%;
+    padding: 3.5% 4%;
+    background: var(--dm-bg);
+    color: var(--dm-text);
+    font-family: var(--font-body);
+    font-size: clamp(7px, 1.35cqw, 12px);
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  @container (max-width: 640px) {
+    .dmx-root {
+      aspect-ratio: auto;
+      height: 30em;
+    }
+  }
+
+  .dmx-topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+  }
+
+  .dmx-brand-dot {
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 0.45em;
+    background: linear-gradient(135deg, var(--dm-c1), var(--dm-accent));
+    flex-shrink: 0;
+  }
+
+  .dmx-title {
+    font-weight: 600;
+    font-size: 1.15em;
+  }
+
+  .dmx-top-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    color: var(--dm-muted);
+    font-size: 0.92em;
+  }
+
+  @container (max-width: 480px) {
+    .dmx-top-actions .dmx-chip,
+    .dmx-top-actions .dmx-live {
+      display: none;
+    }
+  }
+
+  .dmx-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    border: 1px solid var(--dm-border);
+    background: var(--dm-panel);
+    border-radius: 0.5em;
+    padding: 0.3em 0.7em;
+    white-space: nowrap;
+  }
+
+  .dmx-caret {
+    width: 0.45em;
+    height: 0.45em;
+    border-right: 1.2px solid currentColor;
+    border-bottom: 1.2px solid currentColor;
+    transform: rotate(45deg) translateY(-15%);
+    opacity: 0.7;
+  }
+
+  .dmx-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    white-space: nowrap;
+  }
+
+  .dmx-live-dot {
+    width: 0.62em;
+    height: 0.62em;
+    border-radius: 9999px;
+    background: var(--dm-c2);
+    box-shadow: 0 0 0 0.22em color-mix(in oklab, var(--dm-c2) 25%, transparent);
+  }
+
+  .dmx-card {
+    background: var(--dm-panel);
+    border: 1px solid var(--dm-border);
+    border-radius: 0.9em;
+    padding: 1em 1.2em;
+    min-width: 0;
+  }
+
+  .dmx-np {
+    padding-block: 0.8em;
+  }
+
+  .dmx-np-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.85em;
+    color: var(--dm-muted);
+  }
+
+  .dmx-np-row {
+    margin-top: 0.7em;
+    display: flex;
+    align-items: center;
+    gap: 0.9em;
+  }
+
+  .dmx-cover {
+    width: 2.6em;
+    height: 2.6em;
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, var(--dm-c1), var(--dm-bg));
+    display: grid;
+    place-items: center;
+    color: var(--dm-bg);
+    flex-shrink: 0;
+  }
+
+  .dmx-cover svg {
+    width: 60%;
+  }
+
+  .dmx-np-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+    min-width: 0;
+  }
+
+  .dmx-np-meta b {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dmx-np-meta small {
+    color: var(--dm-muted);
+    font-size: 0.85em;
+  }
+
+  .dmx-np-time {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    color: var(--dm-muted);
+  }
+
+  .dmx-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5%;
+  }
+
+  .dmx-stats .dmx-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+
+  .dmx-stats small {
+    color: var(--dm-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dmx-stats strong {
+    font-size: 1.9em;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--dm-text);
+  }
+
+  .dmx-num-c2 {
+    color: var(--dm-c2) !important;
+  }
+
+  .dmx-num-c3 {
+    color: var(--dm-c3) !important;
+  }
+
+  .dmx-stats em {
+    font-style: normal;
+    font-size: 0.78em;
+    color: var(--dm-muted);
+    opacity: 0.85;
+  }
+
+  .dmx-charts {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3.5%;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .dmx-chart-title {
+    display: block;
+    color: var(--dm-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72em;
+  }
+
+  .dmx-chart-body {
+    display: flex;
+    align-items: center;
+    gap: 1.2em;
+    height: calc(100% - 1.4em);
+    padding-top: 0.4em;
+  }
+
+  .dmx-donut {
+    height: 82%;
+    max-width: 42%;
+    flex-shrink: 0;
+  }
+
+  .dmx-legend {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    font-size: 0.82em;
+    color: var(--dm-muted);
+    min-width: 0;
+  }
+
+  .dmx-legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    white-space: nowrap;
+  }
+
+  .dmx-legend i {
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 0.2em;
+    flex-shrink: 0;
+  }
+
+  .dmx-legend b {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--dm-text);
+  }
+</style>

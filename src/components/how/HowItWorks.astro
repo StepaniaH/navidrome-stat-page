@@ -27,8 +27,8 @@ const steps = [
       {
         steps.map((item, index) => (
           <li class="relative text-center" data-reveal style={`--reveal-delay: ${index * 90}ms`}>
-            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-line bg-ink-2 font-display text-lg font-bold">
-              <span class="text-gradient">{item.n}</span>
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-line bg-ink-2 font-display text-lg font-bold text-mist">
+              {item.n}
             </div>
             <h3 class="mt-5 font-display text-lg font-semibold">{item.step.title}</h3>
             <p class="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-mist">{item.step.desc}</p>

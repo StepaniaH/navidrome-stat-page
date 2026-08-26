@@ -1,6 +1,6 @@
 ---
 import { LINKS } from '../../i18n/ui';
-import { localePath, type Language, type Translation } from '../../i18n/utils';
+import type { Language, Translation } from '../../i18n/utils';
 import BrandMark from '../nav/BrandMark.astro';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   t: Translation;
 }
 
-const { lang, t } = Astro.props;
+const { t } = Astro.props;
 
 const links = [
   { href: LINKS.github, label: t.footer.links.github },
@@ -22,11 +22,11 @@ const links = [
 
 <footer class="mt-24 border-t border-line/60">
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <div class="gradient-border px-6 py-12 text-center sm:px-12" data-reveal>
+    <div class="glass-card px-6 py-12 text-center sm:px-12" data-reveal>
       <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t.footer.ctaTitle}</h2>
       <a
         href="#quickstart"
-        class="mt-7 inline-flex rounded-xl bg-gradient-to-r from-brand-orange via-brand-lime to-brand-cyan px-6 py-3 font-semibold text-ink transition-opacity hover:opacity-90"
+        class="mt-7 inline-flex rounded-xl bg-brand-orange px-6 py-3 font-semibold text-ink transition-colors hover:bg-[#fb8b3c]"
       >
         {t.footer.ctaButton}
       </a>
@@ -48,10 +48,5 @@ const links = [
         }
       </nav>
     </div>
-
-    <p class="mt-6 text-xs text-mist/70">
-      {t.footer.disclaimer}
-      <a href={localePath(lang, '/')} class="transition-colors hover:text-mist">navidrome-stat.pages.dev</a>
-    </p>
   </div>
 </footer>

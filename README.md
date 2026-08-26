@@ -45,18 +45,20 @@ src/
 └── styles/global.css  # design tokens (@theme), keyframes, utilities
 
 public/
-├── motion.js          # sole JS entry: reveal, counters, menus, tabs, copy
+├── motion.js          # sole JS entry: reveal, counters, menus, tabs, theme
+│                      #   pills, review modal, synced now-playing, copy
 ├── _headers           # Cloudflare Pages security headers (CSP etc.)
-├── screenshots/       # dashboard screenshots (webp)
 ├── og.png             # social preview image
 └── favicon.svg, apple-touch-icon.png
 ```
 
 ### motion.js contract
 
-Components and motion.js communicate exclusively through data attributes: `data-reveal`, `data-count`, `data-lang-btn/menu`, `data-menu-btn/panel`, `data-theme-btn/img`, `data-start-tab/panel`, `data-copy`. No component may introduce another JS entry point.
+Components and motion.js communicate exclusively through data attributes: `data-reveal`, `data-count`, `data-lang-btn/menu`, `data-menu-btn/panel`, `data-theme-btn/img`, `data-start-tab/panel`, `data-theme-pill`, `data-theme-scope`, `data-review-open/close`, `data-np-fill`, `data-np-current`, `data-copy`. No component may introduce another JS entry point.
 
 The Noto Sans SC stylesheet (`src/styles/noto-sc.css`) is loaded asynchronously (`media="print"`, flipped by motion.js) to keep render-blocking CSS small; CJK text renders in system fonts until it arrives, then swaps.
+
+The theme showcase renders a pure-CSS simulation of the dashboard (`src/components/themes/Themes.astro` + palettes in `src/data/themes.ts`) instead of screenshots — every one of the ten themes can be previewed live, themed entirely through `--dm-*` custom properties.
 
 ## Deployment (Cloudflare Pages)
 
@@ -76,7 +78,7 @@ npm run build && npx wrangler pages deploy dist
 
 ## Asset provenance
 
-- Icon (`favicon.svg`, inline nav logo) and dashboard screenshots come from the main repository's `assets/` directory ([navidrome-stat/assets](https://github.com/StepaniaH/navidrome-stat/tree/main/assets)); screenshots are resized and converted to webp.
+- Icon (`favicon.svg`, inline nav/footer logo) comes from the main repository's `assets/` directory ([navidrome-stat/assets](https://github.com/StepaniaH/navidrome-stat/tree/main/assets)).
 - `og.png` and `apple-touch-icon.png` are rendered from the project brand assets.
 - Fonts: [Fontsource](https://fontsource.org/) self-hosted packages — Inter Variable, Space Grotesk Variable, JetBrains Mono Variable, Noto Sans SC.
 
