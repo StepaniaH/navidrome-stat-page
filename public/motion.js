@@ -203,15 +203,14 @@
     const current = document.querySelector('[data-np-current]');
     if (!fill || !current) return;
     const duration = Number(fill.dataset.npDuration || 337);
-    const sweepMs = Number(fill.dataset.npSweep || 48000);
+    const sweepMs = duration * 1000;
     if (prefersReduced || !('requestAnimationFrame' in window)) {
-      const mid = duration * 0.19;
       fill.style.width = '19%';
-      current.textContent = formatTime(mid);
+      current.textContent = formatTime(duration * 0.19);
       return;
     }
     let lastLabel = -1;
-    const start = performance.now();
+    const start = performance.now() - sweepMs * 0.19;
     const tick = (now) => {
       const p = ((now - start) % sweepMs) / sweepMs;
       fill.style.width = `${(p * 100).toFixed(2)}%`;

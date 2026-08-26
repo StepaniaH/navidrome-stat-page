@@ -71,6 +71,7 @@ const en = {
     np: {
       title: 'Now playing, live',
       desc: 'Watch listening activity as it happens, across every client and server.',
+      caption: '3 clients · 2 servers · updating live',
     },
     aggregate: {
       title: 'Every client, one history',
@@ -87,6 +88,7 @@ const en = {
     cover: {
       title: 'Cover art, proxied and cached',
       desc: 'Album art flows through an authenticated, size-capped cache — your library stays private.',
+      caption: '1,024 covers cached · 128 MB',
     },
     privacy: {
       title: 'Your data, your rules',
@@ -311,6 +313,7 @@ const zh: Translation = {
     np: {
       title: '实时正在播放',
       desc: '跨客户端、跨服务器，实时看到正在进行的收听。',
+      caption: '3 个客户端 · 2 台服务器 · 实时更新',
     },
     aggregate: {
       title: '所有客户端，同一条历史',
@@ -327,6 +330,7 @@ const zh: Translation = {
     cover: {
       title: '封面代理与缓存',
       desc: '专辑封面经过带鉴权的、容量受限的缓存——你的音乐库保持私密。',
+      caption: '已缓存 1,024 张封面 · 128 MB',
     },
     privacy: {
       title: '数据由你做主',
@@ -548,6 +552,7 @@ const zhTW: Translation = {
     np: {
       title: '即時正在播放',
       desc: '跨用戶端、跨伺服器，即時看到正在進行的收聽。',
+      caption: '3 個用戶端 · 2 台伺服器 · 即時更新',
     },
     aggregate: {
       title: '所有用戶端，同一條歷史',
@@ -564,6 +569,7 @@ const zhTW: Translation = {
     cover: {
       title: '封面代理與快取',
       desc: '專輯封面經過帶驗證的、容量受限的快取——你的音樂庫保持私密。',
+      caption: '已快取 1,024 張封面 · 128 MB',
     },
     privacy: {
       title: '資料由你做主',
@@ -785,6 +791,7 @@ const ja: Translation = {
     np: {
       title: 'リアルタイム再生状況',
       desc: 'クライアントもサーバーも問わず、進行中のリスニングをリアルタイムで確認。',
+      caption: '3 クライアント · 2 サーバー · ライブ更新',
     },
     aggregate: {
       title: 'どのクライアントでも、1 つの履歴',
@@ -801,6 +808,7 @@ const ja: Translation = {
     cover: {
       title: 'カバーアートのプロキシとキャッシュ',
       desc: 'アルバムアートは認証付き・容量制限付きのキャッシュを経由します——ライブラリは非公開のまま。',
+      caption: '1,024 枚のカバーをキャッシュ · 128 MB',
     },
     privacy: {
       title: 'データはあなたのもの',
