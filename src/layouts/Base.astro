@@ -2,8 +2,7 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '@fontsource-variable/jetbrains-mono';
-import '@fontsource/noto-sans-sc/400.css';
-import '@fontsource/noto-sans-sc/700.css';
+import notoScCss from '../styles/noto-sc.css?url';
 import '../styles/global.css';
 
 import Nav from '../components/nav/Nav.astro';
@@ -64,6 +63,9 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/og.png', site).href} />
+    <link rel="preload" as="style" href={notoScCss} />
+    <link rel="stylesheet" href={notoScCss} media="print" data-async-css />
+    <noscript><link rel="stylesheet" href={notoScCss} /></noscript>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline src="/motion.js" defer></script>
   </head>

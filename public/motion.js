@@ -152,7 +152,14 @@
     });
   }
 
+  function enableAsyncCss() {
+    document.querySelectorAll('link[data-async-css]').forEach((el) => {
+      el.media = 'all';
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    enableAsyncCss();
     initReveal();
     initCounters();
     initLangMenu();
