@@ -1,8 +1,8 @@
 # Navidrome Stat — Landing Page
 
-Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat), a self-hosted listening statistics dashboard for Navidrome. Four locales (English / 简体中文 / 繁體中文 / 日本語), statically generated with Astro 5.
+Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat), a self-hosted listening statistics dashboard for Navidrome. Six locales (English / 简体中文 / 繁體中文 / 日本語 / Français / Español), statically generated with Astro 5.
 
-**Live:** https://navidrome-stat.pages.dev (其他语言: [/zh/](https://navidrome-stat.pages.dev/zh/) · [/zh-tw/](https://navidrome-stat.pages.dev/zh-tw/) · [/ja/](https://navidrome-stat.pages.dev/ja/))
+**Live:** https://navidrome-stat.pages.dev (autres langues: [/zh/](https://navidrome-stat.pages.dev/zh/) · [/zh-tw/](https://navidrome-stat.pages.dev/zh-tw/) · [/ja/](https://navidrome-stat.pages.dev/ja/) · [/fr/](https://navidrome-stat.pages.dev/fr/) · [/es/](https://navidrome-stat.pages.dev/es/))
 
 ## Principles
 
@@ -20,7 +20,7 @@ npm run dev       # dev server at localhost:4321
 npm run build     # static build to dist/
 npm run check     # astro check (type-checks dictionaries + components)
 npm run preview   # serve the production build locally
-npm run test:e2e  # build + preview + Playwright assertions (all locales)
+npm run test:e2e  # build + preview + Playwright assertions (all 6 locales)
 ```
 
 Requires Node 18.17+ (`.node-version` pins 22 for Cloudflare builds). Playwright uses the shared browser cache; run `npx playwright install chromium` once if it is empty.
@@ -42,7 +42,7 @@ src/
 │   ├── how/ start/    # how-it-works + quickstart tabs w/ copy buttons
 │   ├── trust/ faq/    # privacy/limitations cards + FAQ accordion
 │   └── footer/
-├── pages/             # index.astro (en), zh/, zh-tw/, ja/, 404.astro
+├── pages/             # index.astro (en), zh/, zh-tw/, ja/, fr/, es/, 404.astro
 ├── tests/e2e.mjs      # Playwright assertions, run via npm run test:e2e
 └── styles/global.css  # design tokens (@theme), keyframes, utilities
 

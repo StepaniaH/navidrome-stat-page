@@ -11,6 +11,8 @@ const PATH_PREFIX: Record<Language, string> = {
   zh: '/zh',
   'zh-TW': '/zh-tw',
   ja: '/ja',
+  fr: '/fr',
+  es: '/es',
 };
 
 export function localePath(lang: Language, path: string): string {

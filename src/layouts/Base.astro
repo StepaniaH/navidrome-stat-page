@@ -30,6 +30,8 @@ const HTML_LANG: Record<Language, string> = {
   zh: 'zh-CN',
   'zh-TW': 'zh-TW',
   ja: 'ja',
+  fr: 'fr',
+  es: 'es',
 };
 
 const OG_LOCALE: Record<Language, string> = {
@@ -37,6 +39,8 @@ const OG_LOCALE: Record<Language, string> = {
   zh: 'zh_CN',
   'zh-TW': 'zh_TW',
   ja: 'ja_JP',
+  fr: 'fr_FR',
+  es: 'es_ES',
 };
 
 const OG_IMAGE: Record<Language, string> = {
@@ -44,6 +48,8 @@ const OG_IMAGE: Record<Language, string> = {
   zh: '/og-zh.png',
   'zh-TW': '/og-zh-TW.png',
   ja: '/og-ja.png',
+  fr: '/og-fr.png',
+  es: '/og-es.png',
 };
 
 const ogImage = new URL(OG_IMAGE[lang], site).href;

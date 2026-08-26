@@ -37,6 +37,8 @@ export default defineConfig({
       { path: 'zh', codes: ['zh-CN'] },
       { path: 'zh-tw', codes: ['zh-TW'] },
       { path: 'ja', codes: ['ja'] },
+      { path: 'fr', codes: ['fr'] },
+      { path: 'es', codes: ['es'] },
     ],
     routing: {
       prefixDefaultLocale: false,

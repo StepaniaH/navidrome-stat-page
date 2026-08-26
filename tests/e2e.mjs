@@ -83,12 +83,14 @@ try {
   check('no horizontal overflow @1440', overflowD <= 0, `delta=${overflowD}`);
   await page.close();
 
-  // all four locales render + hreflang + lang attr
+  // all six locales render + hreflang + lang attr
   const locales = [
     { path: '/', htmlLang: 'en', probe: 'Every play,' },
     { path: '/zh/', htmlLang: 'zh-CN', probe: '每一次播放' },
     { path: '/zh-tw/', htmlLang: 'zh-TW', probe: '每一次播放' },
     { path: '/ja/', htmlLang: 'ja', probe: 'すべての再生' },
+    { path: '/fr/', htmlLang: 'fr', probe: 'Chaque écoute' },
+    { path: '/es/', htmlLang: 'es', probe: 'Cada reproducción' },
   ];
   for (const loc of locales) {
     const p = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -98,7 +100,7 @@ try {
     const langAttr = await p.evaluate(() => document.documentElement.lang);
     check(`html lang ${loc.path}`, langAttr === loc.htmlLang, langAttr);
     const hreflangCount = await p.locator('link[rel="alternate"][hreflang]').count();
-    check(`hreflang set ${loc.path}`, hreflangCount === 5, `${hreflangCount}/5`);
+    check(`hreflang set ${loc.path}`, hreflangCount === 7, `${hreflangCount}/7`);
     await p.close();
   }
 

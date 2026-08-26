@@ -1,13 +1,15 @@
-export type Language = 'en' | 'zh' | 'zh-TW' | 'ja';
+export type Language = 'en' | 'zh' | 'zh-TW' | 'ja' | 'fr' | 'es';
 
 export const LANGUAGES: Record<Language, string> = {
   en: 'English',
   zh: '简体中文',
   'zh-TW': '繁體中文',
   ja: '日本語',
+  fr: 'Français',
+  es: 'Español',
 };
 
-export const FUTURE_LANGUAGES: string[] = ['Français', 'Español'];
+export const FUTURE_LANGUAGES: string[] = [];
 
 export const SITE_VERSION = 'v0.8.1';
 
@@ -44,7 +46,7 @@ const en = {
   },
   hero: {
     badge: 'Self-hosted · Open source · MIT',
-    titleA: 'Every play,',
+    titleA: 'Every play, ',
     titleB: 'counted.',
     subtitle:
       'Navidrome Stat polls the getNowPlaying API of your Navidrome servers and turns it into one self-hosted dashboard — listening time, trends, rankings, and a year in review. Your data never leaves your machine.',
@@ -982,7 +984,489 @@ const ja: Translation = {
   },
 };
 
-export const ui: Record<Language, Translation> = { en, zh, 'zh-TW': zhTW, ja };
+const fr: Translation = {
+  meta: {
+    title: 'Navidrome Stat — statistiques d’écoute auto-hébergées pour Navidrome',
+    description:
+      'Un seul tableau de bord pour toutes vos écoutes, quel que soit le client Subsonique, l’appareil ou le nombre de serveurs Navidrome. Temps d’écoute, tendances, classements et rétrospective annuelle. Auto-hébergé, open source, MIT.',
+  },
+  nav: {
+    features: 'Fonctionnalités',
+    themes: 'Thèmes',
+    review: 'Rétrospective',
+    start: 'Démarrage rapide',
+    faq: 'FAQ',
+    docs: 'Docs',
+    deploy: 'Déployer',
+    menuOpen: 'Ouvrir le menu',
+    menuClose: 'Fermer le menu',
+    language: 'Langue',
+    soon: 'bientôt',
+    skip: 'Aller au contenu',
+  },
+  hero: {
+    badge: 'Auto-hébergé · Open source · MIT',
+    titleA: 'Chaque écoute, ',
+    titleB: 'comptée.',
+    subtitle:
+      'Navidrome Stat interroge l’API getNowPlaying de vos serveurs Navidrome et transforme vos écoutes en un tableau de bord auto-hébergé — temps d’écoute, tendances, classements et rétrospective annuelle. Vos données ne quittent jamais votre machine.',
+    ctaDeploy: 'Déployer avec Docker',
+    ctaGithub: 'Voir sur GitHub',
+    np: {
+      live: 'En écoute',
+      track: 'Blue in Green',
+      artist: 'Miles Davis — Kind of Blue',
+      client: 'Feishin · home-nas',
+      total: '5:37',
+    },
+  },
+  proof: {
+    ph: 'Présenté sur Product Hunt',
+    mit: 'Licence MIT',
+    docker: 'Docker Hub — stepaniah/navidrome-statistic',
+    stack: '10 thèmes · 5 langues · tout client Subsonic',
+  },
+  bento: {
+    title: 'Tout ce que votre historique d’écoute sait',
+    subtitle:
+      'Les clients Navidrome ne partagent pas leurs statistiques entre eux. Navidrome Stat observe le serveur à la place — un seul historique, tous les clients.',
+    np: {
+      title: 'En écoute, en direct',
+      desc: 'Suivez l’activité d’écoute en temps réel, sur tous les clients et tous les serveurs.',
+      caption: '3 clients · 2 serveurs · mise à jour en direct',
+    },
+    aggregate: {
+      title: 'Tous les clients, un seul historique',
+      desc: 'DSub, Symfonium, Feishin, lecteurs web — les écoutes de n’importe quel client Subsonic arrivent dans le même historique. Plusieurs serveurs Navidrome aussi.',
+    },
+    charts: {
+      title: 'Des graphiques qui vont loin',
+      desc: 'Tendances horaires et quotidiennes, carte de chaleur jour de l’heure, usage par client, taux de transcodage, et classements d’artistes, d’albums et de titres.',
+    },
+    review: {
+      title: 'Une rétrospective annuelle',
+      desc: 'Totaux, séries d’écoute, et vos meilleurs artistes, albums et titres — votre propre Wrapped, sur vos propres données.',
+    },
+    cover: {
+      title: 'Pochettes relayées et mises en cache',
+      desc: 'Les pochettes passent par un cache authentifié à taille limitée — votre bibliothèque reste privée.',
+      caption: '1 024 pochettes en cache · 128 Mo',
+    },
+    privacy: {
+      title: 'Vos données, vos règles',
+      desc: 'Tout tient dans un fichier SQLite qui vous appartient. Export, import et suppression par utilisateur. Authentification par token optionnelle. Aucune télémétrie.',
+      points: ['Export & import JSON', 'Suppression par utilisateur', 'Auth token optionnelle'],
+    },
+    themesCard: {
+      title: 'Dix thèmes',
+      desc: 'Catppuccin, Nord, Dracula, Tokyo Night, Gruvbox, Solarized — bascule instantanée.',
+    },
+    langs: {
+      title: 'Cinq langues',
+      desc: 'English, 简体中文, 繁體中文, 日本語, Deutsch — d’autres sont sur la feuille de route.',
+    },
+  },
+  themes: {
+    title: 'Choisissez votre thème',
+    subtitle: 'Dix thèmes intégrés recolorent chaque onglet instantanément. Cliquez pour voir le tableau de bord se relooker :',
+    urlLabel: 'localhost:39421',
+    mockLabel: 'Aperçu interactif du tableau de bord Navidrome Stat dans le thème sélectionné',
+    mock: {
+      title: 'Playback Statistics',
+      range: 'Last 30 days',
+      servers: 'All servers',
+      live: 'Listening in real time',
+      nowPlaying: 'Now Playing',
+      clientTag: 'Feishin · home-nas',
+      plays: 'Total plays',
+      listeningTime: 'Listening time',
+      uniqueTracks: 'Unique tracks',
+      clients: 'Clients · by play count',
+      transcoding: 'Transcoding',
+      directPlay: 'Direct Play',
+      transcoded: 'Transcoded',
+    },
+  },
+  review: {
+    title: 'Votre année en musique',
+    subtitle: 'Une page, toute votre année : totaux, séries, et les chansons qui vous ont accompagné.',
+    plays: 'écoutes',
+    hours: 'heures d’écoute',
+    artists: 'artistes',
+    streak: 'jours de série',
+    topTrack: 'Titres du top',
+    disclaimer: 'Données d’exemple — les vrais chiffres viennent de votre propre bibliothèque.',
+    cta: 'Voir un exemple de rétrospective',
+    modal: {
+      tag: '2025 · Bibliothèque d’exemple',
+      close: 'Fermer l’aperçu',
+      deploy: 'Déployez pour la vôtre',
+      how: 'Comment ça marche',
+    },
+  },
+  how: {
+    title: 'Comment ça marche',
+    subtitle: 'Pas de plugin client, pas de compte, pas de cloud. Un petit conteneur à côté de votre serveur de musique.',
+    step1: {
+      title: 'Interroge getNowPlaying',
+      desc: 'Toutes les 10 secondes (configurable), le collecteur demande à chaque serveur Navidrome ce qui est en lecture — via l’API Subsonic que vous utilisez déjà.',
+    },
+    step2: {
+      title: 'Suit les vraies sessions',
+      desc: 'Pauses et coupures sont exclues. Un titre compte comme joué une fois le seuil d’écoute active franchi — 30 secondes par défaut.',
+    },
+    step3: {
+      title: 'Stocke et sert',
+      desc: 'Les écoutes qualifiées atterrissent dans SQLite sur votre disque et s’affichent dans un tableau de bord autonome sur le port 39421.',
+    },
+    note: 'Quand un serveur annonce l’extension OpenSubsonic playbackReport, elle est utilisée automatiquement pour un suivi plus précis de la position et de la durée.',
+  },
+  start: {
+    title: 'Opérationnel en un fichier compose',
+    subtitle: 'Copiez, collez, ouvrez le port 39421. Fixez le tag de version pour des mises à jour reproductibles.',
+    tabCompose: 'compose.yaml',
+    tabRun: 'docker run',
+    tabEnv: '.env',
+    copy: 'Copier',
+    copied: 'Copié',
+    composeName: 'compose.yaml',
+    runName: 'terminal',
+    envName: '.env',
+    docsLink: 'Référence complète de configuration',
+    loginHint:
+      'Avec STATS_API_TOKEN défini, saisissez-le une fois sur l’écran de connexion — le navigateur garde un cookie de session HttpOnly, jamais le token.',
+  },
+  trust: {
+    privacyTitle: 'Privé par défaut',
+    privacyItems: [
+      {
+        title: 'Les données restent locales',
+        desc: 'L’historique d’écoute vit dans un fichier SQLite dans votre propre volume.',
+      },
+      {
+        title: 'Export ou suppression à tout moment',
+        desc: 'Export JSON, import et suppression par utilisateur sont intégrés à la page de paramètres.',
+      },
+      {
+        title: 'Authentification optionnelle',
+        desc: 'Définissez STATS_API_TOKEN et le tableau de bord comme les API exigent une connexion — les sessions utilisent un cookie HttpOnly.',
+      },
+      {
+        title: 'Aucune télémétrie',
+        desc: 'Le conteneur ne parle qu’à un seul tiers : vos serveurs Navidrome.',
+      },
+    ],
+    limitsTitle: 'Limites honnêtes',
+    limitItems: [
+      {
+        title: 'Une instance par ensemble de sources',
+        desc: 'Plusieurs instances interrogeant les mêmes serveurs compteraient les écoutes en double.',
+      },
+      {
+        title: 'SQLite en clair',
+        desc: 'La base et les identifiants enregistrés via les paramètres ne sont pas chiffrés — protégez le volume comme un secret.',
+      },
+      {
+        title: 'Pas de TLS intégré',
+        desc: 'Pour un accès distant, placez-le derrière votre reverse proxy HTTPS.',
+      },
+    ],
+  },
+  faq: {
+    title: 'Questions, réponses',
+    items: [
+      {
+        q: 'Quels clients musicaux sont pris en charge ?',
+        a: 'Tout client compatible Subsonic — DSub, Symfonium, Feishin, play:Sub, substreamer, l’interface web Navidrome, etc. Les statistiques viennent du point de terminaison getNowPlaying du serveur : rien à installer côté client.',
+      },
+      {
+        q: 'Puis-je suivre plusieurs serveurs Navidrome ?',
+        a: 'Oui. Ajoutez chaque serveur dans Paramètres → Connexions ; les écoutes sont marquées par source et le tableau de bord peut filtrer par serveur.',
+      },
+      {
+        q: 'Comment une écoute est-elle comptée exactement ?',
+        a: 'Le temps d’écoute active cumulé doit dépasser PLAY_THRESHOLD_SEC (30 secondes par défaut). Les pauses et intervalles manquants sont exclus, les points de contrôle mettent à jour le même enregistrement, et les sessions terminées sous le seuil sont conservées comme tentatives — pas comme des écoutes.',
+      },
+      {
+        q: 'Ça marche avec Jellyfin ou Airsonic ?',
+        a: 'Cela fonctionne avec tout serveur parlant l’API Subsonic, mais le développement et les tests se font contre Navidrome. Les extensions OpenSubsonic sont utilisées quand un serveur les propose.',
+      },
+      {
+        q: 'Quelle différence avec Last.fm ou Maloja ?',
+        a: 'Last.fm enregistre les scrobbles dans le cloud de quelqu’un d’autre ; Maloja est auto-hébergé mais dépend toujours des clients qui soumettent les scrobbles. Navidrome Stat n’a besoin d’aucun support client — il observe le flux now-playing du serveur lui-même, donc tout client Subsonic est couvert par défaut, et les données restent sur votre disque.',
+      },
+      {
+        q: 'Où sont mes données ?',
+        a: 'Dans un unique fichier SQLite sur votre disque, dans le volume /data du conteneur. Vous pouvez l’exporter en JSON, l’importer ailleurs, ou supprimer l’historique d’un utilisateur — tout depuis la page de paramètres.',
+      },
+      {
+        q: 'C’est lourd en ressources ?',
+        a: 'Un petit conteneur, un fichier SQLite, une boucle d’interrogation de 10 secondes. Un Raspberry Pi le fait tourner confortablement.',
+      },
+    ],
+  },
+  footer: {
+    ctaTitle: 'Prêt à retrouver votre année en musique ?',
+    ctaButton: 'Déployer Navidrome Stat',
+    links: {
+      github: 'GitHub',
+      docker: 'Docker Hub',
+      ph: 'Product Hunt',
+      issues: 'Issues',
+      changelog: 'Journal des modifications',
+      license: 'Licence MIT',
+    },
+    version: 'v0.8.1 · MIT',
+  },
+  notfound: {
+    title: 'Cette page a perdu le rythme.',
+    desc: 'La page que vous cherchez n’existe pas.',
+    home: 'Retour à l’accueil',
+  },
+};
+
+const es: Translation = {
+  meta: {
+    title: 'Navidrome Stat — estadísticas de escucha autoalojadas para Navidrome',
+    description:
+      'Un solo panel para todas tus reproducciones, sin importar el cliente Subsonic, el dispositivo o cuántos servidores Navidrome tengas. Tiempo de escucha, tendencias, rankings y resumen anual. Autoalojado, código abierto, MIT.',
+  },
+  nav: {
+    features: 'Funciones',
+    themes: 'Temas',
+    review: 'Resumen anual',
+    start: 'Inicio rápido',
+    faq: 'FAQ',
+    docs: 'Documentación',
+    deploy: 'Desplegar',
+    menuOpen: 'Abrir menú',
+    menuClose: 'Cerrar menú',
+    language: 'Idioma',
+    soon: 'pronto',
+    skip: 'Ir al contenido',
+  },
+  hero: {
+    badge: 'Autoalojado · Código abierto · MIT',
+    titleA: 'Cada reproducción ',
+    titleB: 'cuenta.',
+    subtitle:
+      'Navidrome Stat sondea la API getNowPlaying de tus servidores Navidrome y convierte tus escuchas en un panel autoalojado: tiempo de escucha, tendencias, rankings y un resumen anual. Tus datos nunca salen de tu máquina.',
+    ctaDeploy: 'Desplegar con Docker',
+    ctaGithub: 'Ver en GitHub',
+    np: {
+      live: 'Escuchando ahora',
+      track: 'Blue in Green',
+      artist: 'Miles Davis — Kind of Blue',
+      client: 'Feishin · home-nas',
+      total: '5:37',
+    },
+  },
+  proof: {
+    ph: 'Presentado en Product Hunt',
+    mit: 'Licencia MIT',
+    docker: 'Docker Hub — stepaniah/navidrome-statistic',
+    stack: '10 temas · 5 idiomas · cualquier cliente Subsonic',
+  },
+  bento: {
+    title: 'Todo lo que sabe tu historial de escucha',
+    subtitle:
+      'Los clientes de Navidrome no comparten estadísticas entre sí. Navidrome Stat observa el servidor en su lugar: un solo historial, todos los clientes.',
+    np: {
+      title: 'Reproduciendo, en directo',
+      desc: 'Sigue la actividad de escucha en tiempo real, en todos los clientes y servidores.',
+      caption: '3 clientes · 2 servidores · actualización en directo',
+    },
+    aggregate: {
+      title: 'Todos los clientes, un solo historial',
+      desc: 'DSub, Symfonium, Feishin, reproductores web: las reproducciones de cualquier cliente Subsonic llegan al mismo historial. También varios servidores Navidrome.',
+    },
+    charts: {
+      title: 'Gráficos que llegan a fondo',
+      desc: 'Tendencias por hora y por día, mapa de calor día de la semana × hora, uso por cliente, tasas de transcodificación y rankings de artistas, álbumes y canciones.',
+    },
+    review: {
+      title: 'Un resumen de tu año',
+      desc: 'Totales, rachas de escucha y tus mejores artistas, álbumes y canciones: tu propio Wrapped, con tus propios datos.',
+    },
+    cover: {
+      title: 'Portadas proxy y en caché',
+      desc: 'Las portadas pasan por una caché autenticada y con límite de tamaño: tu biblioteca sigue siendo privada.',
+      caption: '1 024 portadas en caché · 128 MB',
+    },
+    privacy: {
+      title: 'Tus datos, tus reglas',
+      desc: 'Todo vive en un archivo SQLite que te pertenece. Exportación, importación y borrado por usuario. Autenticación por token opcional. Sin telemetría.',
+      points: ['Exportación e importación JSON', 'Borrado por usuario', 'Token de autenticación opcional'],
+    },
+    themesCard: {
+      title: 'Diez temas',
+      desc: 'Catppuccin, Nord, Dracula, Tokyo Night, Gruvbox, Solarized: cambio instantáneo.',
+    },
+    langs: {
+      title: 'Cinco idiomas',
+      desc: 'English, 简体中文, 繁體中文, 日本語, Deutsch: más en la hoja de ruta.',
+    },
+  },
+  themes: {
+    title: 'Elige el tema que quieras',
+    subtitle: 'Diez temas integrados recolorean cada pestaña al instante. Haz clic y mira cómo cambia el panel:',
+    urlLabel: 'localhost:39421',
+    mockLabel: 'Vista previa interactiva del panel de Navidrome Stat con el tema seleccionado',
+    mock: {
+      title: 'Playback Statistics',
+      range: 'Last 30 days',
+      servers: 'All servers',
+      live: 'Listening in real time',
+      nowPlaying: 'Now Playing',
+      clientTag: 'Feishin · home-nas',
+      plays: 'Total plays',
+      listeningTime: 'Listening time',
+      uniqueTracks: 'Unique tracks',
+      clients: 'Clients · by play count',
+      transcoding: 'Transcoding',
+      directPlay: 'Direct Play',
+      transcoded: 'Transcoded',
+    },
+  },
+  review: {
+    title: 'Tu año en música',
+    subtitle: 'Una página, todo tu año: totales, rachas y las canciones que te acompañaron.',
+    plays: 'reproducciones',
+    hours: 'horas de escucha',
+    artists: 'artistas',
+    streak: 'días de racha',
+    topTrack: 'Canciones top',
+    disclaimer: 'Datos de ejemplo: las cifras reales vienen de tu propia biblioteca.',
+    cta: 'Ver un resumen anual de ejemplo',
+    modal: {
+      tag: '2025 · Biblioteca de ejemplo',
+      close: 'Cerrar vista previa',
+      deploy: 'Despliega y crea el tuyo',
+      how: 'Cómo funciona',
+    },
+  },
+  how: {
+    title: 'Cómo funciona',
+    subtitle: 'Sin plugins de cliente, sin cuentas, sin nube. Un contenedor pequeño junto a tu servidor de música.',
+    step1: {
+      title: 'Sondea getNowPlaying',
+      desc: 'Cada 10 segundos (configurable), el colector pregunta a cada servidor Navidrome qué se está reproduciendo, mediante la API Subsonic que ya tienes.',
+    },
+    step2: {
+      title: 'Sigue sesiones reales',
+      desc: 'Pausas e interrupciones quedan excluidas. Una canción cuenta como reproducida cuando la escucha activa supera tu umbral: 30 segundos por defecto.',
+    },
+    step3: {
+      title: 'Almacena y sirve',
+      desc: 'Las reproducciones válidas se guardan en SQLite en tu disco y se muestran en un panel autosuficiente en el puerto 39421.',
+    },
+    note: 'Cuando un servidor anuncia la extensión OpenSubsonic playbackReport, se usa automáticamente para un seguimiento más preciso de posición y duración.',
+  },
+  start: {
+    title: 'En marcha con un archivo compose',
+    subtitle: 'Copia, pega y abre el puerto 39421. Fija la etiqueta de versión para actualizaciones reproducibles.',
+    tabCompose: 'compose.yaml',
+    tabRun: 'docker run',
+    tabEnv: '.env',
+    copy: 'Copiar',
+    copied: 'Copiado',
+    composeName: 'compose.yaml',
+    runName: 'terminal',
+    envName: '.env',
+    docsLink: 'Referencia completa de configuración',
+    loginHint:
+      'Con STATS_API_TOKEN definido, introdúcelo una vez en la pantalla de inicio de sesión: el navegador guarda una cookie de sesión HttpOnly, nunca el token.',
+  },
+  trust: {
+    privacyTitle: 'Privado por defecto',
+    privacyItems: [
+      {
+        title: 'Los datos se quedan en local',
+        desc: 'El historial de escucha vive en un archivo SQLite dentro de tu propio volumen.',
+      },
+      {
+        title: 'Exporta o borra cuando quieras',
+        desc: 'Exportación JSON, importación y borrado por usuario, integrados en la página de ajustes.',
+      },
+      {
+        title: 'Autenticación opcional',
+        desc: 'Define STATS_API_TOKEN y el panel y las API exigirán inicio de sesión; las sesiones usan una cookie HttpOnly.',
+      },
+      {
+        title: 'Sin telemetría',
+        desc: 'El contenedor solo habla con un tercero: tus servidores Navidrome.',
+      },
+    ],
+    limitsTitle: 'Límites honestos',
+    limitItems: [
+      {
+        title: 'Una instancia por conjunto de fuentes',
+        desc: 'Varias instancias sondeando los mismos servidores contarían las reproducciones por duplicado.',
+      },
+      {
+        title: 'SQLite sin cifrar',
+        desc: 'La base de datos y las credenciales guardadas desde ajustes se almacenan sin cifrar: protege el volumen como cualquier secreto.',
+      },
+      {
+        title: 'Sin TLS integrado',
+        desc: 'Para acceso remoto, colócalo detrás de tu proxy inverso HTTPS.',
+      },
+    ],
+  },
+  faq: {
+    title: 'Preguntas, respondidas',
+    items: [
+      {
+        q: '¿Qué clientes de música admite?',
+        a: 'Cualquier cliente compatible con Subsonic: DSub, Symfonium, Feishin, play:Sub, substreamer, la interfaz web de Navidrome y más. Las estadísticas vienen del endpoint getNowPlaying del servidor, así que no hay que instalar nada en el cliente.',
+      },
+      {
+        q: '¿Puedo seguir varios servidores Navidrome?',
+        a: 'Sí. Añade cada servidor en Ajustes → Conexiones; las reproducciones se etiquetan por origen y el panel puede filtrar por servidor.',
+      },
+      {
+        q: '¿Cómo se cuenta exactamente una reproducción?',
+        a: 'El tiempo de escucha activa acumulado debe superar PLAY_THRESHOLD_SEC (30 segundos por defecto). Las pausas e intervalos perdidos se excluyen, los puntos de control actualizan el mismo registro y las sesiones que terminan por debajo del umbral se guardan como intentos, no como reproducciones.',
+      },
+      {
+        q: '¿Funciona con Jellyfin o Airsonic?',
+        a: 'Funciona con cualquier servidor que hable la API Subsonic, pero se desarrolla y prueba contra Navidrome. Las extensiones OpenSubsonic se usan cuando el servidor las ofrece.',
+      },
+      {
+        q: '¿En qué se diferencia de Last.fm o Maloja?',
+        a: 'Last.fm registra los scrobbles en la nube de otro; Maloja es autoalojado pero sigue dependiendo de que los clientes envíen los scrobbles. Navidrome Stat no necesita nada del cliente: observa el propio flujo now-playing del servidor, así que cubre cualquier cliente Subsonic por defecto, y los datos se quedan en tu disco.',
+      },
+      {
+        q: '¿Dónde viven mis datos?',
+        a: 'En un único archivo SQLite en tu disco, dentro del volumen /data del contenedor. Puedes exportarlo a JSON, importarlo en otro sitio o borrar el historial de un usuario, todo desde la página de ajustes.',
+      },
+      {
+        q: '¿Cuántos recursos consume?',
+        a: 'Un contenedor pequeño, un archivo SQLite y un sondeo cada 10 segundos. Una Raspberry Pi lo lleva sin problemas.',
+      },
+    ],
+  },
+  footer: {
+    ctaTitle: '¿Listo para reencontrarte con la música de tu año?',
+    ctaButton: 'Desplegar Navidrome Stat',
+    links: {
+      github: 'GitHub',
+      docker: 'Docker Hub',
+      ph: 'Product Hunt',
+      issues: 'Issues',
+      changelog: 'Registro de cambios',
+      license: 'Licencia MIT',
+    },
+    version: 'v0.8.1 · MIT',
+  },
+  notfound: {
+    title: 'Esta página perdió el compás.',
+    desc: 'La página que buscas no existe.',
+    home: 'Volver al inicio',
+  },
+};
+
+export const ui: Record<Language, Translation> = { en, zh, 'zh-TW': zhTW, ja, fr, es };
 
 export const CODE = {
   compose: `services:
