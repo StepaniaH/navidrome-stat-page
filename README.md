@@ -1,8 +1,8 @@
 # Navidrome Stat — Landing Page
 
-Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat), a self-hosted listening statistics dashboard for Navidrome. Six locales (English / 简体中文 / 繁體中文 / 日本語 / Français / Español), statically generated with Astro 5.
+Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat), a self-hosted listening statistics dashboard for Navidrome. Seven locales (English / 简体中文 / 繁體中文 / 日本語 / Deutsch / Français / Español), statically generated with Astro 5.
 
-**Live:** https://navidrome-stat.pages.dev (autres langues: [/zh/](https://navidrome-stat.pages.dev/zh/) · [/zh-tw/](https://navidrome-stat.pages.dev/zh-tw/) · [/ja/](https://navidrome-stat.pages.dev/ja/) · [/fr/](https://navidrome-stat.pages.dev/fr/) · [/es/](https://navidrome-stat.pages.dev/es/))
+**Live:** https://navidrome-stat.pages.dev (autres langues: [/zh/](https://navidrome-stat.pages.dev/zh/) · [/zh-tw/](https://navidrome-stat.pages.dev/zh-tw/) · [/ja/](https://navidrome-stat.pages.dev/ja/) · [/de/](https://navidrome-stat.pages.dev/de/) · [/fr/](https://navidrome-stat.pages.dev/fr/) · [/es/](https://navidrome-stat.pages.dev/es/))
 
 ## Principles
 
@@ -12,6 +12,16 @@ Marketing site for [Navidrome Stat](https://github.com/StepaniaH/navidrome-stat)
 - **Respects `prefers-reduced-motion`.** All animation degrades via CSS media queries and runtime checks.
 - **Verifiable claims only.** Copy mirrors the main repository's README — no marketing fluff.
 
+## Syncing with the main app
+
+Copy claims mirror the main repository. When `navidrome-stat` releases a new version, update:
+
+- `SITE_VERSION` in `src/i18n/ui.ts` — the Quickstart `compose.yaml`/`docker run` snippets and the footer version follow it automatically;
+- numeric claims (palette/language counts) and the "Honest limitations" wording, against the current README and CHANGELOG;
+- palettes in `src/data/themes.ts` if the app's `src/static/themes.css` changed.
+
+`npm run test:e2e` asserts the compose snippet against `SITE_VERSION`, so a stale pin fails the run.
+
 ## Local development
 
 ```sh
@@ -20,7 +30,7 @@ npm run dev       # dev server at localhost:4321
 npm run build     # static build to dist/
 npm run check     # astro check (type-checks dictionaries + components)
 npm run preview   # serve the production build locally
-npm run test:e2e  # build + preview + Playwright assertions (all 6 locales)
+npm run test:e2e  # build + preview + Playwright assertions (all 7 locales)
 ```
 
 Requires Node 18.17+ (`.node-version` pins 22 for Cloudflare builds). Playwright uses the shared browser cache; run `npx playwright install chromium` once if it is empty.
@@ -42,7 +52,7 @@ src/
 │   ├── how/ start/    # how-it-works + quickstart tabs w/ copy buttons
 │   ├── trust/ faq/    # privacy/limitations cards + FAQ accordion
 │   └── footer/
-├── pages/             # index.astro (en), zh/, zh-tw/, ja/, fr/, es/, 404.astro
+├── pages/             # index.astro (en), zh/, zh-tw/, ja/, de/, fr/, es/, 404.astro
 ├── tests/e2e.mjs      # Playwright assertions, run via npm run test:e2e
 └── styles/global.css  # design tokens (@theme), keyframes, utilities
 
@@ -62,7 +72,7 @@ Components and motion.js communicate exclusively through data attributes: `data-
 
 The Noto Sans SC stylesheet (`src/styles/noto-sc.css`) is loaded asynchronously (`media="print"`, flipped by motion.js) to keep render-blocking CSS small; CJK text renders in system fonts until it arrives, then swaps.
 
-The theme showcase renders a pure-CSS simulation of the dashboard (`src/components/themes/Themes.astro` + palettes in `src/data/themes.ts`) instead of screenshots — every one of the ten themes can be previewed live, themed entirely through `--dm-*` custom properties. Mock labels are localized with the dashboard's own UI strings for the locales the app supports (en, 简体中文, 繁體中文, 日本語); fr/es previews show the app's English UI, matching what a fr/es user would actually see.
+The theme showcase renders a pure-CSS simulation of the dashboard (`src/components/themes/Themes.astro` + palettes in `src/data/themes.ts`) instead of screenshots — all eighteen presets (nine palette families × light/dark, transcribed from the app's `src/static/themes.css`) can be previewed live, themed entirely through `--dm-*` custom properties. Mock labels are localized with the dashboard's own UI strings for every landing locale, mirroring the app's per-locale catalogs (the app itself ships all seven interface languages). German falls back to the default (English) social card until a dedicated `og-de.png` is rendered.
 
 Latin fonts (Inter, Space Grotesk, JetBrains Mono) are managed by the Astro Fonts API (`experimental.fonts`, local provider over the Fontsource packages): self-hosted with hashed filenames, preloaded above the fold, with explicit `Noto Sans SC` fallbacks so CJK text still resolves to the async stylesheet.
 

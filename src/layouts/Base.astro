@@ -30,6 +30,7 @@ const HTML_LANG: Record<Language, string> = {
   zh: 'zh-CN',
   'zh-TW': 'zh-TW',
   ja: 'ja',
+  de: 'de',
   fr: 'fr',
   es: 'es',
 };
@@ -39,15 +40,18 @@ const OG_LOCALE: Record<Language, string> = {
   zh: 'zh_CN',
   'zh-TW': 'zh_TW',
   ja: 'ja_JP',
+  de: 'de_DE',
   fr: 'fr_FR',
   es: 'es_ES',
 };
 
+// German ships without a dedicated render yet; it falls back to the default (English) card.
 const OG_IMAGE: Record<Language, string> = {
   en: '/og.png',
   zh: '/og-zh.png',
   'zh-TW': '/og-zh-TW.png',
   ja: '/og-ja.png',
+  de: '/og.png',
   fr: '/og-fr.png',
   es: '/og-es.png',
 };

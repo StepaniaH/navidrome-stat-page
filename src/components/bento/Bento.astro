@@ -1,4 +1,5 @@
 ---
+import { LANGUAGES } from '../../i18n/ui';
 import type { Language, Translation } from '../../i18n/utils';
 
 interface Props {
@@ -22,7 +23,7 @@ const themeDots = [
   { name: 'Gruvbox', bg: '#282828', accent: '#FABD2F' },
 ];
 
-const langChips = ['English', '简体中文', '繁體中文', '日本語', 'Deutsch'];
+const langChips = Object.values(LANGUAGES);
 ---
 
 <section id="features" class="scroll-mt-20">

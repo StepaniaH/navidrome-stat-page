@@ -11,6 +11,7 @@ const PATH_PREFIX: Record<Language, string> = {
   zh: '/zh',
   'zh-TW': '/zh-tw',
   ja: '/ja',
+  de: '/de',
   fr: '/fr',
   es: '/es',
 };

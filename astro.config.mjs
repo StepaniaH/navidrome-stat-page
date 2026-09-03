@@ -37,6 +37,7 @@ export default defineConfig({
       { path: 'zh', codes: ['zh-CN'] },
       { path: 'zh-tw', codes: ['zh-TW'] },
       { path: 'ja', codes: ['ja'] },
+      { path: 'de', codes: ['de'] },
       { path: 'fr', codes: ['fr'] },
       { path: 'es', codes: ['es'] },
     ],

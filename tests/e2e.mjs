@@ -101,10 +101,17 @@ try {
     check('lang menu is semantic link list with aria-current', sem.optionRoles === 0 && sem.current === 'English', JSON.stringify(sem));
   }
 
-  // version interpolation: compose snippet must carry the pinned version tag
+  // version interpolation: compose snippet must carry the pinned version tag.
+  // SITE_VERSION is read from the source of truth so this check survives version bumps.
   {
     const composeCode = await page.locator('[data-start-panel="compose"] code').textContent();
-    check('compose snippet pins SITE_VERSION', composeCode.includes('stepaniah/navidrome-statistic:v0.8.1'));
+    const uiSrc = readFileSync(new URL('../src/i18n/ui.ts', import.meta.url), 'utf8');
+    const siteVersion = uiSrc.match(/SITE_VERSION = '([^']+)'/)?.[1];
+    check(
+      'compose snippet pins SITE_VERSION',
+      !!siteVersion && composeCode.includes(`stepaniah/navidrome-statistic:${siteVersion}`),
+      siteVersion,
+    );
   }
 
   // overflow desktop
@@ -112,12 +119,13 @@ try {
   check('no horizontal overflow @1440', overflowD <= 0, `delta=${overflowD}`);
   await page.close();
 
-  // all six locales render + hreflang + lang attr
+  // all seven locales render + hreflang + lang attr
   const locales = [
     { path: '/', htmlLang: 'en', probe: 'Every play,' },
     { path: '/zh/', htmlLang: 'zh-CN', probe: '每一次播放' },
     { path: '/zh-tw/', htmlLang: 'zh-TW', probe: '每一次播放' },
     { path: '/ja/', htmlLang: 'ja', probe: 'すべての再生' },
+    { path: '/de/', htmlLang: 'de', probe: 'Jede Wiedergabe' },
     { path: '/fr/', htmlLang: 'fr', probe: 'Chaque écoute' },
     { path: '/es/', htmlLang: 'es', probe: 'Cada reproducción' },
   ];
@@ -129,7 +137,7 @@ try {
     const langAttr = await p.evaluate(() => document.documentElement.lang);
     check(`html lang ${loc.path}`, langAttr === loc.htmlLang, langAttr);
     const hreflangCount = await p.locator('link[rel="alternate"][hreflang]').count();
-    check(`hreflang set ${loc.path}`, hreflangCount === 7, `${hreflangCount}/7`);
+    check(`hreflang set ${loc.path}`, hreflangCount === 8, `${hreflangCount}/8`);
     await p.close();
   }
 
@@ -156,6 +164,13 @@ try {
     await p.goto(BASE + '/zh/', { waitUntil: 'networkidle' });
     const body = await p.evaluate(() => document.body.innerText);
     check('zh theme mock localized', body.includes('播放统计'));
+    await p.close();
+  }
+  {
+    const p = await browser.newPage();
+    await p.goto(BASE + '/de/', { waitUntil: 'networkidle' });
+    const body = await p.evaluate(() => document.body.innerText);
+    check('de theme mock localized', body.includes('Wiedergabestatistiken') && body.includes('Hörzeit'));
     await p.close();
   }
 
@@ -196,9 +211,9 @@ try {
     const langHrefs = await pm.locator('[data-menu-panel] a').evaluateAll((as) =>
       as
         .map((a) => a.getAttribute('href'))
-        .filter((h) => ['/', '/zh/', '/zh-tw/', '/ja/', '/fr/', '/es/'].includes(h))
+        .filter((h) => ['/', '/zh/', '/zh-tw/', '/ja/', '/de/', '/fr/', '/es/'].includes(h))
     );
-    check(`mobile menu offers all 6 languages ${path}`, langHrefs.length === 6, langHrefs.join(' '));
+    check(`mobile menu offers all 7 languages ${path}`, langHrefs.length === 7, langHrefs.join(' '));
     await pm.click('[data-menu-panel] a[href="#features"]');
     check(`mobile menu closes on anchor click ${path}`, await pm.locator('[data-menu-panel]').isHidden());
     await pm.close();
